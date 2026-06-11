@@ -100,7 +100,7 @@ def main():
     sess_csv = os.path.join(args.out_dir, "session_summary.csv")
     sess_df.to_csv(sess_csv, index=False)
 
-    # Montage sidecar (scalp labels are constant across the dataset; assert and record).
+    # Montage sidecar (record whether scalp labels are constant across sessions).
     montages = sess_df["scalp_channels"].unique()
     montage_consistent = len(montages) == 1
     with open(os.path.join(args.out_dir, "scalp_montage.json"), "w") as fh:

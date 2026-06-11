@@ -13,7 +13,9 @@ agents/Claude/
 ├── Session Summaries/                 ← human-readable per-session reports
 │   ├── HumanReport1.md
 │   ├── HumanReport2.md
-│   └── HumanReport3.md
+│   ├── HumanReport3.md
+│   ├── HumanReport4.md
+│   └── HumanReport5.md
 └── Progress Reports/                  ← director-facing reports every 8th session + at phase/amendment events
     ├── Progress Report Phase 0 Close.md
     └── Progress Report Phase 1 Close.md
@@ -33,11 +35,11 @@ All current files are authoritative. There is no scratch/temp content yet. If I 
 
 ## Files I own or co-own outside this folder
 
-- `utils/` (project root) — **data layer (Session 4).** `nix_io.py` (NIX session reader: aligned scalp epochs, trial metadata, lazy iEEG/electrode access), `epoching.py` (maintenance-window extraction). Shared module imported by all scripts per Standards.
-- `scripts/` (project root) — **Phase 2 data-layer scripts (Session 4).** `validate_nix_reader.py` (stop-or-go reader gate, 20/20 pass), `build_trial_metadata.py` (project-wide trial table — the contract Codex's controls harness consumes), `audit_trial_counts.py` (pre-model trial-count + montage audit).
+- `utils/` (project root) — **data + feature layer.** `nix_io.py` (NIX session reader: aligned scalp epochs, trial metadata, lazy iEEG/electrode access), `epoching.py` (maintenance-window extraction), `features.py` (**Session 5** — band-power + tangent-space covariance feature extraction). Shared module imported by all scripts per Standards.
+- `scripts/` (project root) — **Phase 2 scripts.** Data layer (Session 4): `validate_nix_reader.py` (stop-or-go reader gate), `build_trial_metadata.py` (project-wide trial table — the metadata contract), `audit_trial_counts.py` (pre-model count + montage audit). Feature/decoding layer (**Session 5**): `build_features.py` (feature bundle), `make_loso_splits.py` (LOSO folds + leakage validation), `run_load_decoder.py` (rung-1 logistic/LDA signal decoder).
 - `requirements.txt` (project root) — pinned, commercial-OK dependencies (Session 4).
-- `outputs/` (project root, **gitignored / local-only**, rebuildable) — `trial_metadata.{csv,parquet}`, `session_summary.csv`, `scalp_montage.json`, `trial_count_audit.{md,csv}`, `trial_count_by_setsize.csv`, `montage_intersection.json`.
-- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — concluded; *Phase 2 Controls Interface* — **active**, I replied Session 4 with the data-layer field mapping + audit results + the open montage question).
+- `outputs/` (project root, **gitignored / local-only**, rebuildable) — data-layer tables (`trial_metadata.*`, `session_summary.csv`, `scalp_montage.json`, `trial_count_audit.*`, `montage_intersection.json`); `outputs/features/` (Session 5: `feature_bundle.npz`, `feature_metadata.*`, `exclusions.csv`, `feature_names.json`, `loso_folds.json`, `loso_fold_assignment.csv`); `outputs/decoding/` (Session 5: `predictions_*`, `subject_scores_*`, `summary_*.json`).
+- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — concluded; *Phase 2 Controls Interface* — **concluded Session 5** after the montage/bar lock + the feature-bundle/LOSO handoff).
 - `Claim Sheet.md` (project root) — I am the default writer; **agent-approved rev. 2; Phase 1 closed Session 3**.
 - `Accessible Claim Sheet.md` (project root) — my default-writer companion to the Claim Sheet; **written Session 3**. Kept in sync with the technical sheet via the amendment protocol.
 - `director_requests.md` (project root) — co-owned operational log; I opened it Session 3 with the *Claim Sheet ready for director review* entry.

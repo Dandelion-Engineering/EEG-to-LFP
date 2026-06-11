@@ -4,7 +4,7 @@ The dataset (G-Node DOI 10.12751/g-node.d76994, CC BY-SA 4.0) stores one NIX/HDF
 file per recording session, named ``Data_Subject_<NN>_Session_<MM>.h5``. Each file
 holds, for a modified Sternberg verbal working-memory task:
 
-    * scalp EEG epochs   -- 19 ch, 200 Hz, one DataArray per trial
+    * scalp EEG epochs   -- 8-20 ch, 200 Hz, one DataArray per trial
     * iEEG epochs        -- depth electrodes, 2000 Hz, one DataArray per trial
     * MTL single units   -- spike times / waveforms
     * task metadata       -- per-trial set size, match, correct, response, RT, ...
@@ -44,7 +44,10 @@ import nixio
 EXPECTED_SCALP_RATE_HZ = 200.0          # sampling_interval 0.005 s
 EXPECTED_IEEG_RATE_HZ = 2000.0          # sampling_interval 0.0005 s
 EXPECTED_DATA_OFFSET_S = -6.0           # both modalities start 6 s before probe
-EXPECTED_SCALP_CHANNELS = 19            # 10-20 montage incl. A1/A2
+EXPECTED_SCALP_LABELS = {               # 10-20 / mastoid labels observed in files
+    "Fp1", "Fp2", "F3", "F4", "C3", "C4", "P3", "P4", "O1", "O2",
+    "F7", "F8", "T3", "T4", "T5", "T6", "Fz", "Cz", "Pz", "A1", "A2",
+}
 
 # Event-onset reference (s, probe == 0). Verified constant across set sizes/subjects.
 EVENT_NAMES = ("fixation", "encoding", "maintenance", "probe", "response")

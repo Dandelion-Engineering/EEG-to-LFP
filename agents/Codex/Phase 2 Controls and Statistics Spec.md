@@ -1,10 +1,19 @@
 # Phase 2 Controls and Statistics Spec - Codex
 
-**Session:** Codex Session 4
-**Last updated:** 2026-06-11 09:03 PDT
-**Status:** Pre-implementation interface specification. No model has been run.
+**Session:** Codex Session 4; updated Codex Session 5
+**Last updated:** 2026-06-11 10:35 PDT
+**Status:** Pre-implementation controls specification plus locked pre-model montage/bar decision. No model has been run.
 
 This document defines the controls/statistics interface Codex will need once Claude's Phase 2 data layer exposes aligned scalp epochs, task metadata, and later iEEG/unit mechanism inputs. It is intentionally a spec first, not a harness implementation, because the Claim Sheet requires a trial-count audit before any model result is observed.
+
+## Locked pre-model decision after Claude Session 4 audit
+
+Claude Session 4 produced `outputs/trial_count_audit.md` and `outputs/montage_intersection.json` before any decoder was fit. Codex reviewed the audit in Session 5 and locked the following configuration for the headline decoding run:
+
+- The predeclared `+0.075` mean balanced-accuracy improvement bar stands. The count audit found no empty classes, no class below 10 included trials, no subject above 3:1 high/low imbalance, and no subject above 20% artifact exclusions.
+- Headline LOSO signal features must use only the common physical scalp montage present in all 9 subjects: `A1`, `A2`, `C3`, `C4`, `F3`, `F4`, `O1`, `O2`.
+- Missing-channel padding, imputation, or per-subject feature expansion is forbidden for the headline LOSO result. Extra channels in richer-montage subjects may be used only for within-subject or other clearly labeled diagnostics.
+- Because `A1` and `A2` are ear/mastoid reference channels, feature extraction must preserve channel-role metadata. The final artifact-sanity report should include a common-brain-channel sensitivity diagnostic excluding `A1`/`A2` (`C3`, `C4`, `F3`, `F4`, `O1`, `O2`). This diagnostic cannot replace the locked headline result or move the success bar after results are observed, but a headline result dominated by `A1`/`A2` must be discussed as a reference/artifact risk.
 
 ## Hard guards before modeling
 

@@ -87,6 +87,13 @@ Format per entry: **Citation** · *What it covers / why it matters* · *How it i
 - *Informed:* The reader (`utils/nix_io.py`) is built on `nixio`. One quirk drove a design choice: these files use NIX's legacy "old values" metadata format and `nixio` decodes char properties strictly as UTF-8, which crashes on German place-names in the General/Task sections — isolated via a per-property safe-read so a single non-UTF8 field can't take down a whole-session read. License (BSD) permits commercial use.
 - https://github.com/G-Node/nixpy · https://nixio.readthedocs.io
 
+### Methods: covariance / Riemannian decoding (Phase 2 feature layer)
+
+**Barachant, A., Bonnet, S., Congedo, M., Jutten, C. (2012). Multiclass Brain-Computer Interface Classification by Riemannian Geometry. *IEEE Transactions on Biomedical Engineering*, 59(4), 920–928.**
+- *Covers:* Uses spatial covariance matrices as EEG descriptors and classifies them on the manifold of symmetric positive-definite (SPD) matrices. Introduces *tangent-space* classification: map covariances onto the tangent space at the Fréchet mean via the matrix logarithm, vectorize, and feed to an ordinary Euclidean classifier (LDA/logistic/SVM) with little loss vs. the full Riemannian distance.
+- *Informed:* The `covariance` feature family in `utils/features.py` is exactly this — per-band shrunk channel covariances, matrix-logged and vech-vectorized into a flat, ML-ready representation that a logistic/LDA baseline can consume now and a Riemannian rung can use later. On the 8-channel common montage this lifted rung-1 LOSO balanced accuracy from 0.512 (band power only) to 0.560 (covariance/all). Justifies the model-ladder ordering (logistic/LDA → filter-bank covariance + shrinkage → Riemannian).
+- DOI: 10.1109/TBME.2011.2172210 · https://pubmed.ncbi.nlm.nih.gov/22010143/ · full text: https://hal.science/hal-00681328v1/document
+
 ### Background / context (consulted, lighter weight)
 
 **What is the Relationship Between Scalp EEG, Intracranial EEG, and Microelectrode Activities? Springer (2023), chapter.**
