@@ -1,8 +1,8 @@
 # Phase 2 Controls and Statistics Spec - Codex
 
-**Session:** Codex Session 4; updated Codex Session 5
-**Last updated:** 2026-06-11 10:35 PDT
-**Status:** Pre-implementation controls specification plus locked pre-model montage/bar decision. No model has been run.
+**Session:** Codex Session 4; updated Codex Sessions 5-6
+**Last updated:** 2026-06-11 12:18 PDT
+**Status:** Controls/statistics/dashboard scripts implemented for the first signal rung. The logistic/all-features/all-channel headline signal result has been compared against controls and does **not** meet the Claim Sheet success criteria.
 
 This document defines the controls/statistics interface Codex will need once Claude's Phase 2 data layer exposes aligned scalp epochs, task metadata, and later iEEG/unit mechanism inputs. It is intentionally a spec first, not a harness implementation, because the Claim Sheet requires a trial-count audit before any model result is observed.
 
@@ -14,6 +14,34 @@ Claude Session 4 produced `outputs/trial_count_audit.md` and `outputs/montage_in
 - Headline LOSO signal features must use only the common physical scalp montage present in all 9 subjects: `A1`, `A2`, `C3`, `C4`, `F3`, `F4`, `O1`, `O2`.
 - Missing-channel padding, imputation, or per-subject feature expansion is forbidden for the headline LOSO result. Extra channels in richer-montage subjects may be used only for within-subject or other clearly labeled diagnostics.
 - Because `A1` and `A2` are ear/mastoid reference channels, feature extraction must preserve channel-role metadata. The final artifact-sanity report should include a common-brain-channel sensitivity diagnostic excluding `A1`/`A2` (`C3`, `C4`, `F3`, `F4`, `O1`, `O2`). This diagnostic cannot replace the locked headline result or move the success bar after results are observed, but a headline result dominated by `A1`/`A2` must be discussed as a reference/artifact risk.
+
+## Codex Session 6 implementation and first control result
+
+Codex Session 6 implemented the first controls/statistics/dashboard lane:
+
+- `scripts/run_control_models.py` consumes `outputs/features/feature_bundle.npz`, `outputs/features/feature_metadata.csv`, and a signal prediction/score pair. It runs the label-shuffle, behavioral-only, and timing-only controls on the same LOSO folds as the signal model; hard-fails if forbidden target columns enter non-signal controls; and emits a within-training subject-identity diagnostic.
+- `scripts/summarize_subject_statistics.py` computes the Claim Sheet success criteria from subject-level improvements over the strongest non-signal control, including exact sign-flip evidence, subject-bootstrap interval, and leave-one-subject-removed robustness.
+- `scripts/render_verification_dashboard.py` renders an initial static HTML dashboard from the prediction/statistics tables. The current dashboard is decoding-only because the mechanism layer has not been run.
+
+Smoke-test command sequence used the existing ignored artifacts:
+
+```text
+.\venv\Scripts\python.exe scripts\run_control_models.py --bundle outputs\features\feature_bundle.npz --metadata outputs\features\feature_metadata.csv --signal-predictions outputs\decoding\predictions_logistic_all_all.csv --signal-subject-scores outputs\decoding\subject_scores_logistic_all_all.csv --out-dir outputs\controls --model logistic --feature-family all --channel-set all --n-shuffles 100 --seed 7
+.\venv\Scripts\python.exe scripts\summarize_subject_statistics.py --control-subject-scores outputs\controls\control_subject_scores_logistic_all_all.csv --out-dir outputs\statistics --seed 7
+.\venv\Scripts\python.exe scripts\render_verification_dashboard.py --predictions outputs\controls\control_predictions_logistic_all_all.csv --subject-statistics outputs\statistics\subject_statistics_logistic_all_all.csv --summary outputs\statistics\summary_logistic_all_all.json --out-dir outputs\dashboard
+```
+
+First controlled result for `logistic_all_all`:
+
+- mean signal balanced accuracy: `0.560`;
+- mean strongest-control balanced accuracy: `0.593`;
+- mean improvement: `-0.033`;
+- subjects above strongest control: `3/9`;
+- minimum leave-one-subject-removed mean improvement: `-0.042`;
+- headline success criteria met: `no`;
+- the strongest control is behavioral-only for all 9 subjects.
+
+Interpretation: this does not close the project, because Claude's model ladder can still test stronger signal models, but it blocks any success claim for the first logistic/all-features rung. Future rungs must be passed through the same controls/statistics scripts before being compared to the Claim Sheet bar.
 
 ## Hard guards before modeling
 
