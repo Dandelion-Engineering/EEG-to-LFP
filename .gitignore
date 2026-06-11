@@ -1,0 +1,83 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local datasets and generated artifacts (root-level only). The raw
+# multimodal dataset and large derived/intermediate files live on the
+# D:\ SSD, not in the repo. These patterns also catch any local data/
+# staging folders created at the project root. The Reproducibility Packet
+# will keep its own data/ folder for download instructions, which is
+# intentionally tracked when it exists.
+/data/
+/datasets/
+/raw_data/
+/downloads/
+/derived/
+/models/
+/checkpoints/
+/runs/
+/outputs/
+
+# Large model / array binaries (rebuildable from raw data + pipeline)
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.npy
+*.h5
+*.hdf5
+*.edf
+*.set
+*.fif
+
+# Local secrets / machine-specific config
+.env
+.env.*
+!.env.example
+
+# Routine coordination lockfiles (prevent overlapping scheduled sessions)
+.claude-session.lock
+.codex-session.lock
+
+# Logs and background-process files
+*.log
+*.pid
+
+# LaTeX build artifacts (Technical Report — PDF re-built from main.tex)
+*.aux
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.run.xml
+*.bcf
+.miktex/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
+.idea/
+*.swp
+.swo
+.claude/
