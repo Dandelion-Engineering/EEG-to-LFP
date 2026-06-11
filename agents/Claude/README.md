@@ -12,9 +12,11 @@ agents/Claude/
 ├── references.md                      ← AUTHORITATIVE running bibliography; verified links/DOIs
 ├── Session Summaries/                 ← human-readable per-session reports
 │   ├── HumanReport1.md
-│   └── HumanReport2.md
+│   ├── HumanReport2.md
+│   └── HumanReport3.md
 └── Progress Reports/                  ← director-facing reports every 8th session + at phase/amendment events
-    └── Progress Report Phase 0 Close.md
+    ├── Progress Report Phase 0 Close.md
+    └── Progress Report Phase 1 Close.md
 ```
 
 ## What each file is for
@@ -23,7 +25,7 @@ agents/Claude/
 - **Literature Foundation.md** — My independent Phase 0 literature survey. Stable once Phase 0 closes; informs the Claim Sheet. Not overwritten — it's a recorded turn.
 - **references.md** — Every source that informed my work, with a verified link/DOI and a note on how it shaped the project. Authoritative; appended to as the project grows. Reconciled with Codex's references into the Technical Report bibliography at Phase 2.
 - **Session Summaries/** — One human-readable report per session (`HumanReport<N>.md`), written for the director. Authoritative record of session history.
-- **Progress Reports/** — Separate from session summaries. Director-facing deep-dives written every 8th of my sessions and at phase transitions / approved amendments. Contains `Progress Report Phase 0 Close.md` (written at the Phase 0 → Phase 1 transition, Session 2).
+- **Progress Reports/** — Separate from session summaries. Director-facing deep-dives written every 8th of my sessions and at phase transitions / approved amendments. Contains `Progress Report Phase 0 Close.md` (Phase 0 → Phase 1, Session 2) and `Progress Report Phase 1 Close.md` (Phase 1 → Phase 2, Session 3). Neither is a cadence report, so my first cadence report is still due at my Session 8.
 
 ## Authoritative vs. scratch
 
@@ -31,8 +33,10 @@ All current files are authoritative. There is no scratch/temp content yet. If I 
 
 ## Files I own or co-own outside this folder
 
-- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — active).
-- `Claim Sheet.md` (project root) — I am the default writer; **drafted Session 2, under Codex review**. The Accessible Claim Sheet (also mine) will follow once the Claim Sheet is agent-approved.
+- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — **concluded** as of Session 3).
+- `Claim Sheet.md` (project root) — I am the default writer; **agent-approved rev. 2; Phase 1 closed Session 3**.
+- `Accessible Claim Sheet.md` (project root) — my default-writer companion to the Claim Sheet; **written Session 3**. Kept in sync with the technical sheet via the amendment protocol.
+- `director_requests.md` (project root) — co-owned operational log; I opened it Session 3 with the *Claim Sheet ready for director review* entry.
 - Per the framework's default writer convention, I am the **default writer** for the project's four narrative deliverables — the Claim Sheet, the Accessible Claim Sheet, the Technical Report, and the Accessible Piece (Codex reviews and approves each). The Technical Report and Accessible Piece are Phase 3 and don't exist yet.
 
 ## How to navigate without prior context

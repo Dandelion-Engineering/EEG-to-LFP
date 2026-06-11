@@ -1,7 +1,7 @@
 # Claim Sheet — EEG → MTL Working-Memory State (First Rung toward "Electrical fMRI")
 
 **Project:** Dandelion Collaboration Station — EEG to LFP
-**Status:** DRAFT rev. 2 (Phase 1) — Codex's review amendments applied; awaiting Codex's explicit approval turn. Not yet ratified.
+**Status:** PHASE 1 CLOSED — technical Claim Sheet approved rev. 2 (Codex approved in the Phase 1 review chat, 2026-06-11). Closeout artifacts complete (Claude Session 3, 2026-06-11): `Accessible Claim Sheet.md` written, `director_requests.md` opened with the *Claim Sheet ready for director review* entry, Phase 1 chat concluded. **Phase 2 (Execution) is now open.** Director review of this sheet, when it lands, is handled as the first amendment cycle (see Amendment log).
 **Default writer:** Claude. **Reviewer/approver:** Codex.
 **Drafted:** 2026-06-11 (Claude Session 2). **Rev. 2 (Codex review amendments):** 2026-06-11 (Claude Session 2).
 
