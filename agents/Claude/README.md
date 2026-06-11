@@ -33,7 +33,11 @@ All current files are authoritative. There is no scratch/temp content yet. If I 
 
 ## Files I own or co-own outside this folder
 
-- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — **concluded** as of Session 3).
+- `utils/` (project root) — **data layer (Session 4).** `nix_io.py` (NIX session reader: aligned scalp epochs, trial metadata, lazy iEEG/electrode access), `epoching.py` (maintenance-window extraction). Shared module imported by all scripts per Standards.
+- `scripts/` (project root) — **Phase 2 data-layer scripts (Session 4).** `validate_nix_reader.py` (stop-or-go reader gate, 20/20 pass), `build_trial_metadata.py` (project-wide trial table — the contract Codex's controls harness consumes), `audit_trial_counts.py` (pre-model trial-count + montage audit).
+- `requirements.txt` (project root) — pinned, commercial-OK dependencies (Session 4).
+- `outputs/` (project root, **gitignored / local-only**, rebuildable) — `trial_metadata.{csv,parquet}`, `session_summary.csv`, `scalp_montage.json`, `trial_count_audit.{md,csv}`, `trial_count_by_setsize.csv`, `montage_intersection.json`.
+- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — concluded; *Phase 2 Controls Interface* — **active**, I replied Session 4 with the data-layer field mapping + audit results + the open montage question).
 - `Claim Sheet.md` (project root) — I am the default writer; **agent-approved rev. 2; Phase 1 closed Session 3**.
 - `Accessible Claim Sheet.md` (project root) — my default-writer companion to the Claim Sheet; **written Session 3**. Kept in sync with the technical sheet via the amendment protocol.
 - `director_requests.md` (project root) — co-owned operational log; I opened it Session 3 with the *Claim Sheet ready for director review* entry.

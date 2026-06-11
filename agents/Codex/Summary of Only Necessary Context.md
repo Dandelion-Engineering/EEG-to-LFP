@@ -1,80 +1,103 @@
 # Summary of Only Necessary Context - Codex
 
-**Last rewritten:** 2026-06-11 (Codex Session 3)
-**Current phase:** Phase 1 - technical Claim Sheet approved; Accessible Claim Sheet and director review pending
+**Last rewritten:** 2026-06-11 (Codex Session 4)
+**Current phase:** Phase 2 - Execution open
 
-Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, and the active chats at the start of the next session. This file only records Codex-specific continuity not already contained there.
+Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the Claim Sheet pair, and active chats at the start of the next session. This file only records Codex-specific continuity not already contained there.
 
 ## Current project state
 
-Phase 0 is closed. Claude closed the Phase 0 literature alignment chat and wrote:
+Phase 0 and Phase 1 are closed.
 
-- `chats/Claude-Codex/Phase 0 Literature Alignment/Phase 0 Literature Alignment - Concluded.md`
-- `chats/Claude-Codex/Phase 0 Literature Alignment/Summary.md`
+- Phase 0 Literature Alignment is concluded:
+  - `chats/Claude-Codex/Phase 0 Literature Alignment/Phase 0 Literature Alignment - Concluded.md`
+  - `chats/Claude-Codex/Phase 0 Literature Alignment/Summary.md`
+- Phase 1 Claim Sheet Review is concluded:
+  - `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Concluded.md`
+  - `chats/Claude-Codex/Claim Sheet Phase 1/Summary.md`
+- `Claim Sheet.md` is agent-approved rev. 2 and says Phase 1 is closed / Phase 2 is open.
+- `Accessible Claim Sheet.md` exists and is the director-facing companion to the technical Claim Sheet.
+- `director_requests.md` exists. Request 1 asks Randy to review the Claim Sheet pair. This is non-blocking; Phase 2 proceeds while waiting.
+- Git history currently has `94312f5 Claude Session 3` at `HEAD` and `origin/main`; Claude committed Codex Session 3's uncommitted closeout files along with the Phase 1 closeout.
 
-The technical Claim Sheet is now approved:
+No Phase 2 analysis code exists yet. No pinned `requirements.txt`, NIX reader, aligned epoch output, feature extraction, controls harness, or dashboard renderer exists yet.
 
-- `Claim Sheet.md` is rev. 2 and has Codex approval recorded in `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Active.md`.
-- Codex Session 3 updated the Claim Sheet status header to say the technical sheet is approved.
-- Phase 1 is **not closed** yet because the Accessible Claim Sheet and `director_requests.md` entry do not exist.
-- Codex Session 3 could not be committed or pushed because `git add` failed with permission denied while creating `.git/index.lock`. The file changes are present in the working tree and need commit/push once `.git` write access is available.
+## Codex Session 4 work
 
-The active Phase 1 chat remains:
+Codex Session 4 did not implement model code because Claude's data layer does not exist and the Claim Sheet requires a trial-count audit before any decoder result is observed.
 
-- `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Active.md`
+Codex created:
 
-## Technical Claim Sheet approval
+- `agents/Codex/Phase 2 Controls and Statistics Spec.md`
+- `chats/Claude-Codex/Phase 2 Controls Interface/Phase 2 Controls Interface - Active.md`
+- `agents/Codex/Session Summaries/HumanReport4.md`
 
-Codex approved the technical Claim Sheet in Session 3 after verifying Claude's rev. 2 amendments:
+The controls/statistics spec defines what Codex will need from Claude's reader/aligned-epoch layer: trial metadata, epoch/window metadata, feature bundle shape, control definitions, trial-count audit outputs, subject-level evidence rules, and verification-dashboard prediction-table inputs. It emphasizes explicit validation of forbidden behavioral-control inputs and leakage guards.
 
-1. **Behavioral-only control label leakage fixed.** Slot 7 excludes set size and any set-size-encoding variable; permitted covariates are response time, correctness, match/mismatch, session, trial order, and timing.
-2. **Primary epoch fixed.** Slots 5 and 7 make maintenance-period decoding the headline; encoding and recall are secondary diagnostics.
-3. **Concrete success/statistics rule fixed.** Primary target is binary high-vs-low load classification, set size 4 versus 6/8; primary metric is LOSO balanced accuracy during maintenance; success requires at least +0.075 absolute improvement over the strongest non-signal control, at least 7 of 9 held-out subjects above that control, and no single-subject removal dropping mean improvement below +0.04. Evidence must be subject-level; window-level permutation cannot substitute.
-4. **Mechanism-layer coverage downgrade fixed.** Phase 2 must audit MTL coverage before mechanism analysis. At least 5 subjects with adequate MTL coverage are required for the mechanism layer to support the full deep-readout claim. If fewer qualify, the project can only claim load decoding with mechanism evidence too sparse or inconclusive.
+The new active chat asks Claude to preserve those data-layer semantics while building the NIX reader. It specifically flags `previous_trial_correct` as useful because the dataset paper states an incorrect trial is always followed by a set-size-4 trial, which could create a trial-order confound.
 
 ## Approved labor split
 
-- Claude owns the data layer: NIX reader, event/epoch alignment, LOSO split harness, feature extraction, and primary load-decoding pipeline.
+- Claude owns the data layer: pinned dependency install, NIX reader, event/epoch alignment, LOSO split harness, feature extraction, and primary load-decoding pipeline.
 - Codex owns the controls/statistics specification and harness: label-shuffle, behavioral-only with target excluded, timing-only, autocorrelation/window-leakage guard, subject-level permutation/uncertainty, and related reporting.
-- Codex leads mechanism-validation analysis once the data layer exposes aligned iEEG/unit inputs.
-- Codex owns per-subject verification-dashboard rendering.
-- Mechanism validation is co-owned because it depends on Claude's reader/alignment implementation.
+- Codex leads verification-dashboard per-subject rendering.
+- Mechanism validation is co-owned. Codex leads analysis, but it depends on Claude's reader/alignment exposing iEEG/unit inputs and MTL coverage metadata.
 - Metrics and the Reproducibility Packet are co-owned.
 
-## Recommended next actions
+## Next actions
 
 For Claude's next session:
 
-1. Write `Accessible Claim Sheet.md`.
-2. Create `director_requests.md` with the Claim Sheet ready-for-director-review entry.
-3. Update any remaining status language and formally close Phase 1 / open Phase 2 once the technical and accessible sheets are aligned.
+1. Read the active `Phase 2 Controls Interface` chat and Codex's spec before finalizing reader output shapes.
+2. Install pinned dependencies into `venv` using only `.\venv\Scripts\python.exe` / `.\venv\Scripts\pip.exe`.
+3. Create `requirements.txt` with pinned versions and document dependency licenses.
+4. Build the NIX reader and validate it against the dataset's MATLAB loader / `NIX_File_Structure.pdf` before trusting outputs.
+5. Produce the pre-model trial-count audit: maintenance-period trials by subject/session/set size, rejected trials, binary high/low counts, and class imbalance.
+6. If the counts challenge the +0.075 success bar, open a Claude-Codex discussion before any model runs.
 
 For Codex's next session:
 
-1. Do not begin Phase 2 implementation unless the Accessible Claim Sheet and director-review entry exist.
-2. If Claude has completed Phase 1 closeout, read the technical and accessible sheets for drift, then begin Codex's Phase 2 lane only if the closeout is coherent.
-3. If Codex Session 3 changes are still uncommitted, commit/push them before starting new project work.
-4. First likely Codex Phase 2 tasks: controls/statistics harness design, subject-level evidence protocol, mechanism coverage audit specification, and dashboard rendering plan, coordinated with Claude's data layer.
+1. First check whether Claude has responded in `chats/Claude-Codex/Phase 2 Controls Interface/Phase 2 Controls Interface - Active.md`.
+2. If the data layer and trial-count audit still do not exist, do not implement model-scoring code. Continue only with interface/specification or dashboard design work that does not observe model results.
+3. If aligned epoch outputs and the trial-count audit exist, review them for control compatibility, leakage risks, and whether the success bar remains fair before implementing the controls harness.
+4. Implement controls only after the pre-model audit is complete and any bar discussion is resolved.
 
-## Local substrate facts to carry forward
+## Hard technical guards to preserve
+
+- Primary target: binary high-vs-low load, set size 4 vs set sizes 6/8.
+- Headline epoch: maintenance period.
+- Headline split: leave-one-subject-out.
+- Held-out subject is scored once; all model/feature/window choices happen inside training subjects only.
+- Adjacent windows from the same trial cannot straddle train/test boundaries.
+- Behavioral-only control must exclude set size and every set-size-encoding variable.
+- Evidence is subject-level. Window-level permutation cannot substitute.
+- Success bar remains the Claim Sheet bar unless changed before modeling: mean balanced-accuracy improvement >= 0.075 over strongest non-signal control, at least 7/9 subjects above control, and no single-subject removal dropping mean improvement below 0.04.
+- Mechanism full-claim support requires at least 5 subjects with adequate MTL coverage. Fewer than 5 means the mechanism layer is too sparse for the full deep-readout claim.
+
+## Local substrate facts
 
 - Dataset path: `D:\Simultaneous EEG_LFP`
-- Local dataset files include 37 session `.h5` files in `data_nix`, MATLAB loading code, README metadata, `datacite.yml`, a CC BY-SA license, and subject/file-structure PDFs.
-- Dataset summary from local metadata and paper: 9 epilepsy patients, modified Sternberg verbal working-memory task, simultaneous 10-20 scalp EEG, depth iEEG/LFP, 1526 MTL units, MNI coordinates/anatomical labels, and trial metadata.
-- The project virtual environment exists at `.\venv` and uses Python 3.11.9, but currently lacks core dependencies such as NumPy, SciPy, h5py, MNE, scikit-learn, nixio, and torch.
+- Local dataset files are expected to include 37 session `.h5` files in `data_nix`, MATLAB loading code, README metadata, `datacite.yml`, a CC BY-SA license, and subject/file-structure PDFs.
+- Dataset summary: 9 epilepsy patients, modified Sternberg verbal working-memory task, simultaneous 10-20 scalp EEG, depth iEEG/LFP, 1526 MTL units, MNI coordinates/anatomical labels, and trial metadata.
+- The task has encoding, 3-second maintenance, and recall/probe periods. The dataset paper says an incorrect trial is always followed by a set-size-4 trial; controls should audit this possible trial-order confound.
+- Scalp EEG is resampled to 200 Hz; iEEG is resampled to 2 kHz.
+- The project virtual environment exists at `.\venv` and uses Python 3.11.9, but currently lacks the Phase 2 dependency stack.
 - For all Python work, use only `.\venv\Scripts\python.exe` and `.\venv\Scripts\pip.exe`.
 
 ## Codex workspace state
 
 Codex workspace files include:
 
-- `agents/Codex/Literature Foundation.md` - Codex's Phase 0 scientific foundation.
-- `agents/Codex/references.md` - Codex's running bibliography.
-- `agents/Codex/Phase 1 Claim Sheet Review Scaffold.md` - Codex's technical review checklist.
-- `agents/Codex/README.md` - workspace navigation.
+- `agents/Codex/Literature Foundation.md`
+- `agents/Codex/references.md`
+- `agents/Codex/Phase 1 Claim Sheet Review Scaffold.md`
+- `agents/Codex/Phase 2 Controls and Statistics Spec.md`
+- `agents/Codex/README.md`
+- `agents/Codex/Summary of Only Necessary Context.md`
 - `agents/Codex/Session Summaries/HumanReport1.md`
 - `agents/Codex/Session Summaries/HumanReport2.md`
 - `agents/Codex/Session Summaries/HumanReport3.md`
+- `agents/Codex/Session Summaries/HumanReport4.md`
 
 ## Process reminders
 

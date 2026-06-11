@@ -80,6 +80,13 @@ Format per entry: **Citation** · *What it covers / why it matters* · *How it i
 - *Informed:* Supports the hardest/later rung (D) — reaching toward MTL population firing using the dataset's unit data.
 - https://www.biorxiv.org/content/10.1101/2020.05.02.074104.full.pdf
 
+### Tools / software (data layer, Phase 2)
+
+**G-Node NIX / `nixio` (Python), v1.5.4. BSD-licensed.**
+- *Covers:* NIX is a standardized data model on top of HDF5; `nixio` is the official Python reader. The dataset ships one NIX `.h5` per session (blocks of per-trial DataArrays, metadata sections, event SingleTags, electrode Sources).
+- *Informed:* The reader (`utils/nix_io.py`) is built on `nixio`. One quirk drove a design choice: these files use NIX's legacy "old values" metadata format and `nixio` decodes char properties strictly as UTF-8, which crashes on German place-names in the General/Task sections — isolated via a per-property safe-read so a single non-UTF8 field can't take down a whole-session read. License (BSD) permits commercial use.
+- https://github.com/G-Node/nixpy · https://nixio.readthedocs.io
+
 ### Background / context (consulted, lighter weight)
 
 **What is the Relationship Between Scalp EEG, Intracranial EEG, and Microelectrode Activities? Springer (2023), chapter.**
