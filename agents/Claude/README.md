@@ -18,7 +18,8 @@ agents/Claude/
 │   ├── HumanReport5.md
 │   ├── HumanReport6.md
 │   ├── HumanReport7.md
-│   └── HumanReport8.md
+│   ├── HumanReport8.md
+│   └── HumanReport9.md
 └── Progress Reports/                  ← director-facing reports every 8th session + at phase/amendment events
     ├── Progress Report Phase 0 Close.md
     ├── Progress Report Phase 1 Close.md
@@ -44,11 +45,12 @@ All current files are authoritative. There is no scratch/temp content yet. If I 
 - `scripts/` (project root) — **Phase 2 scripts.** Data layer (Session 4): `validate_nix_reader.py`, `build_trial_metadata.py`, `audit_trial_counts.py`. Feature/decoding layer (**Session 5**): `build_features.py`, `make_loso_splits.py`, `run_load_decoder.py` (rung-1 logistic/LDA). Riemannian + mechanism layer (**Session 6**): `run_riemann_decoder.py` (rung-2 tangent + rung-3 MDM), `audit_mtl_coverage.py`. EEGNet layer (**Session 7**, **RUN Session 8**): `run_eegnet_decoder.py` (rung-4 EEGNet LOSO decoder, same output contract; gradient-checked + executed S8 once disk was freed — mean LOSO BA 0.616, headline bar NOT met). Codex's mechanism scripts (S8, co-owned): `run_behavioral_control_ablation.py`, `run_mtl_bandpower_probe.py`.
 - `requirements.txt` (project root) — pinned, commercial-OK dependencies (Session 4).
 - `outputs/` (project root, **gitignored / local-only**, rebuildable) — data-layer tables (`trial_metadata.*`, `session_summary.csv`, `scalp_montage.json`, `trial_count_audit.*`, `montage_intersection.json`); `outputs/features/` (Session 5: `feature_bundle.npz`, `feature_metadata.*`, `exclusions.csv`, `feature_names.json`, `loso_folds.json`, `loso_fold_assignment.csv`); `outputs/decoding/` (Session 5 rung-1 + Session 6 Riemannian rungs: `predictions_*`, `subject_scores_*`, `summary_*.json`); `outputs/mechanism/` (Session 6: `mtl_coverage.csv`, `mtl_contacts.csv`, `mtl_coverage_summary.json`).
-- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — concluded; *Phase 2 Controls Interface* — concluded Session 5; *Riemannian Ladder Verdict* — **opened Session 6, active**; EEGNet numbers landed S8, decoding ladder exhausted, **amendment to re-point toward MTL coupling now PROPOSED — stays OPEN until Codex approves/refines**). Also `chats/Claude-Codex-Human/Some Updates` — Randy's S8 updates (disk freed, Claim Sheet approved, new git protocol), I responded S8, left open for Codex to conclude.
-- `Claim Sheet.md` (project root) — I am the default writer; agent-approved rev. 2 (Phase 1, S3); **director-approved as-is S8; AMENDMENT 1 ratified S8** (decoding→coupling re-point; see Amendment log).
+- `deliverables/technical_report/` (project root) — **Phase 3, Technical Report deliverable (started Session 9).** `main.tex` (complete compiling LaTeX draft built around the Amendment-1 two-part result; pdflatex+bibtex, 10 pp), `references.bib` (load-bearing citations from both agents' reference files), `README.md` (build steps + the three open items [P1] dashboard figures, [P2] Part B confirmatory test slot, [P3] final references reconciliation). DRAFT pending Codex review. Build artifacts (`*.pdf`/`*.aux`/`*.log`/`*.bbl`) are gitignored and rebuilt from source.
+- `chats/Claude-Codex/...` — I co-own chat threads with Codex (*Phase 0 Literature Alignment* — concluded; *Claim Sheet Phase 1* — concluded; *Phase 2 Controls Interface* — concluded Session 5; *Riemannian Ladder Verdict* — opened S6, **CONCLUDED Session 9** with `Summary.md` once Amendment 1 was ratified + approved). Also `chats/Claude-Codex-Human/Some Updates` — Randy's S8 updates, concluded by Codex (bundled into my S9 push).
+- `Claim Sheet.md` (project root) — I am the default writer; agent-approved rev. 2 (Phase 1, S3); **director-approved as-is S8; AMENDMENT 1 ratified S8, final wording approved by Codex S10** (decoding→coupling re-point; see Amendment log).
 - `Accessible Claim Sheet.md` (project root) — my default-writer companion; written S3, **Amendment 1 synced S8**. Kept in sync with the technical sheet via the amendment protocol.
 - `director_requests.md` (project root) — co-owned operational log; I opened it Session 3 with the *Claim Sheet ready for director review* entry.
-- Per the framework's default writer convention, I am the **default writer** for the project's four narrative deliverables — the Claim Sheet, the Accessible Claim Sheet, the Technical Report, and the Accessible Piece (Codex reviews and approves each). The Technical Report and Accessible Piece are Phase 3 and don't exist yet.
+- Per the framework's default writer convention, I am the **default writer** for the project's four narrative deliverables — the Claim Sheet, the Accessible Claim Sheet, the Technical Report (**draft started S9**), and the Accessible Piece (not yet started). Codex reviews and approves each.
 
 ## How to navigate without prior context
 

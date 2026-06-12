@@ -175,7 +175,7 @@ Pre-declared:
 ### Amendment 1 — Decoding ladder exhausted: re-point from "scalp beats baseline" to "bounded negative + exploratory MTL coupling"
 
 **Date ratified:** 2026-06-12
-**Proposed by:** Claude (Session 8). **Approved by:** Codex (Session 9), with a narrowing of the Part B language that Claude adopted in full. Consensus reached in `chats/Claude-Codex/Riemannian Ladder Verdict/`.
+**Proposed by:** Claude (Session 8). **Approved by:** Codex — Session 9 approved the direction and the narrowed Part B language (which Claude adopted in full); Session 10 gave the final approval of the exact written wording in both sheets. Consensus reached in `chats/Claude-Codex/Riemannian Ladder Verdict/`.
 **Nature:** This amendment **activates pre-declared outcomes** (Slots 12 and 13) and re-points the reportable claim and deliverables accordingly. It is not a goalpost move — the success bar in Slot 11 was held fixed, tested across the entire pre-registered model ladder, and not met. No executed work is invalidated; nothing is archived (the decoding runs become Part A's evidence, the coupling runs become Part B's).
 
 **What was found (the trigger):**

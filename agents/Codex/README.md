@@ -20,7 +20,9 @@ agents/Codex/
     |-- HumanReport5.md
     |-- HumanReport6.md
     |-- HumanReport7.md
-    `-- HumanReport8.md
+    |-- HumanReport8.md
+    |-- HumanReport9.md
+    `-- HumanReport10.md
 ```
 
 ## Authoritative files
@@ -41,16 +43,20 @@ agents/Codex/
 
 - `Claim Sheet.md`: Agent-approved technical Claim Sheet rev. 2. Phase 1 is closed and Phase 2 is open.
 - `Accessible Claim Sheet.md`: Plain-language companion to the technical Claim Sheet, written for Randy and kept in sync through amendments.
-- `director_requests.md`: Director-facing request log. Request 1 asks Randy to review the Claim Sheet and Accessible Claim Sheet; it is non-blocking.
+- `director_requests.md`: Director-facing request log. Requests 1 and 2 are resolved as of 2026-06-12: Randy approved the Claim Sheet pair and freed disk space for the EEGNet rung.
 - `chats/Claude-Codex/Phase 0 Literature Alignment/Phase 0 Literature Alignment - Concluded.md`: Concluded Phase 0 alignment transcript.
 - `chats/Claude-Codex/Phase 0 Literature Alignment/Summary.md`: Summary of the concluded Phase 0 alignment.
 - `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Concluded.md`: Concluded Phase 1 review transcript where Codex approved the technical Claim Sheet.
 - `chats/Claude-Codex/Claim Sheet Phase 1/Summary.md`: Summary of the concluded Phase 1 review.
 - `chats/Claude-Codex/Phase 2 Controls Interface/Phase 2 Controls Interface - Concluded.md`: Concluded interface handoff for Claude's data layer and Codex's controls/statistics/dashboard lane.
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`: Active Phase 2 coordination thread for the Riemannian/EEGNet ladder, behavioral-control ablation, and mechanism next direction.
+- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`: Active Phase 2 coordination thread for the Riemannian/EEGNet ladder, behavioral-control ablation, mechanism evidence, and the proposed post-EEGNet Claim Sheet amendment.
+- `chats/Claude-Codex-Human/Some Updates/Some Updates - Concluded.md`: Concluded thread where Randy approved the Claim Sheet, reported disk space was freed, and clarified the Codex/Claude git protocol.
+- `chats/Claude-Codex-Human/Some Updates/Summary.md`: Summary of the concluded Randy/Claude/Codex update thread.
 - `scripts/run_control_models.py`: Codex-owned control harness for label-shuffle, behavioral-only, timing-only, and subject-identity diagnostics.
 - `scripts/run_behavioral_control_ablation.py`: Codex-owned ablation runner that separates response-time, correctness/match, previous-trial, and trial/session behavioral controls.
 - `scripts/run_mtl_bandpower_probe.py`: Codex-owned first mechanism scaffold that summarizes MTL theta/alpha band power and compares it with supplied scalp decoder scores.
+- `scripts/run_mtl_residual_coupling_probe.py`: Codex-owned mechanism sensitivity script that tests whether EEGNet score-to-MTL theta-alpha coupling survives load, schedule, and behavioral residualization.
+- `scripts/summarize_phase2_amendment_evidence.py`: Codex-owned amendment-support summarizer that compiles completed EEGNet statistics, behavioral-control, bandpower, and residual-coupling outputs into a reproducible evidence packet for the proposed Claim Sheet amendment.
 - `scripts/summarize_subject_statistics.py`: Codex-owned subject-level success-criteria summary for signal-vs-control results.
 - `scripts/render_verification_dashboard.py`: Codex-owned static dashboard renderer for the director verification path.
 - `scripts/audit_mtl_coverage.py`: Co-owned mechanism gate script; now uses the shared MTL anatomy helper.

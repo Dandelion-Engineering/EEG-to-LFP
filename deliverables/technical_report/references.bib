@@ -1,0 +1,111 @@
+% Technical Report bibliography — EEG -> MTL working-memory state (first rung toward "electrical fMRI")
+% Entries are reconciled from agents/Claude/references.md and agents/Codex/references.md.
+% Every entry carries a verified link or DOI obtained via live search during the project (Standards).
+% NOTE (Phase 2/3): a final joint reconciliation pass over both agents' references.md is pending
+% before the report is declared complete; this file currently holds the load-bearing citations the
+% report actually uses.
+
+@article{boran2020dataset,
+  author  = {Boran, Ece and Fedele, Tommaso and Steiner, Andreas and Hilfiker, Peter and Stieglitz, Lennart and Grunwald, Thomas and Sarnthein, Johannes},
+  title   = {Dataset of human medial temporal lobe neurons, scalp and intracranial {EEG} during a verbal working memory task},
+  journal = {Scientific Data},
+  volume  = {7},
+  pages   = {30},
+  year    = {2020},
+  doi     = {10.1038/s41597-020-0364-3},
+  note    = {G-Node DOI 10.12751/g-node.d76994; CC BY-SA 4.0}
+}
+
+@article{boran2019persistent,
+  author  = {Boran, Ece and Fedele, Tommaso and Klaver, Peter and Hilfiker, Peter and Stieglitz, Lennart and Grunwald, Thomas and Sarnthein, Johannes},
+  title   = {Persistent hippocampal neural firing and hippocampal-cortical coupling predict verbal working memory load},
+  journal = {Science Advances},
+  volume  = {5},
+  number  = {3},
+  pages   = {eaav3687},
+  year    = {2019},
+  doi     = {10.1126/sciadv.aav3687}
+}
+
+@article{fedele2020functional,
+  author  = {Fedele, Tommaso and Boran, Ece and Hilfiker, Peter and Stieglitz, Lennart and Grunwald, Thomas and Sarnthein, Johannes},
+  title   = {Functional synchronization between hippocampal {sEEG}, parietal {ECoG} and scalp {EEG} during a verbal working memory task},
+  journal = {bioRxiv},
+  year    = {2020},
+  doi     = {10.1101/2020.06.05.136515}
+}
+
+@article{barachant2012multiclass,
+  author  = {Barachant, Alexandre and Bonnet, St{\'e}phane and Congedo, Marco and Jutten, Christian},
+  title   = {Multiclass Brain-Computer Interface Classification by Riemannian Geometry},
+  journal = {IEEE Transactions on Biomedical Engineering},
+  volume  = {59},
+  number  = {4},
+  pages   = {920--928},
+  year    = {2012},
+  doi     = {10.1109/TBME.2011.2172210}
+}
+
+@article{zanini2018transfer,
+  author  = {Zanini, Paolo and Congedo, Marco and Jutten, Christian and Said, Salem and Berthoumieu, Yannick},
+  title   = {Transfer Learning: A Riemannian Geometry Framework With Applications to Brain-Computer Interfaces},
+  journal = {IEEE Transactions on Biomedical Engineering},
+  volume  = {65},
+  number  = {5},
+  pages   = {1107--1116},
+  year    = {2018},
+  doi     = {10.1109/TBME.2017.2742541}
+}
+
+@article{lawhern2018eegnet,
+  author  = {Lawhern, Vernon J. and Solon, Amelia J. and Waytowich, Nicholas R. and Gordon, Stephen M. and Hung, Chou P. and Lance, Brent J.},
+  title   = {{EEGNet}: a compact convolutional neural network for {EEG}-based brain-computer interfaces},
+  journal = {Journal of Neural Engineering},
+  volume  = {15},
+  number  = {5},
+  pages   = {056013},
+  year    = {2018},
+  doi     = {10.1088/1741-2552/aace8c}
+}
+
+@article{varoquaux2016assessing,
+  author  = {Varoquaux, Ga{\"e}l and Raamana, Pradeep Reddy and Engemann, Denis A. and Hoyos-Idrobo, Andr{\'e}s and Schwartz, Yannick and Thirion, Bertrand},
+  title   = {Assessing and tuning brain decoders: Cross-validation, caveats, and guidelines},
+  journal = {arXiv preprint arXiv:1606.05201},
+  year    = {2016},
+  doi     = {10.48550/arXiv.1606.05201}
+}
+
+@article{delpup2025partitioning,
+  author  = {Del Pup, Federico and Zanola, Andrea and Tshimanga, Louis Fabrice and Bertoldo, Alessandra and Finos, Livio and Atzori, Manfredo},
+  title   = {The role of data partitioning on the performance of {EEG}-based deep learning models in supervised cross-subject analysis: A preliminary study},
+  journal = {arXiv preprint arXiv:2505.13021},
+  year    = {2025},
+  doi     = {10.48550/arXiv.2505.13021}
+}
+
+@article{constantino2021deep,
+  author  = {Constantino, Anthony C. and Sisterson, Nathaniel D. and Zaher, Naoir and Urban, Alexandra and Richardson, R. Mark and Kokkinos, Vasileios},
+  title   = {Deep Learning of Simultaneous Intracranial and Scalp {EEG} for Prediction, Detection, and Lateralization of Mesial Temporal Lobe Seizures},
+  journal = {Frontiers in Neurology},
+  volume  = {12},
+  pages   = {705119},
+  year    = {2021},
+  doi     = {10.3389/fneur.2021.705119}
+}
+
+@misc{neuroflownet2026,
+  author       = {{NeuroFlowNet authors}},
+  title        = {Non-Invasive Reconstruction of Intracranial {EEG} Across the Deep Temporal Lobe from Scalp {EEG} based on Conditional Normalizing Flow},
+  howpublished = {arXiv:2603.03354},
+  year         = {2026},
+  note         = {Closest prior art for scalp-to-intracranial reconstruction; trained on a 16~GB GPU, outside this project's 8~GB envelope}
+}
+
+@misc{nixio,
+  author       = {{G-Node}},
+  title        = {{NIX}/{nixio}: a standardized data model and {Python} library on top of {HDF5}},
+  howpublished = {\url{https://github.com/G-Node/nixpy}},
+  year         = {2024},
+  note         = {Version 1.5.4, BSD license; official reader for the dataset's NIX files}
+}
