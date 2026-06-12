@@ -1,0 +1,34 @@
+# Reproducibility Packet — packet-local .gitignore.
+# This is separate from the repository-root .gitignore and governs only artifacts
+# that may be generated inside this packet directory when a reader runs the pipeline.
+#
+# The verification dashboard shipped with the packet (verification_dashboard.html)
+# IS tracked intentionally — it is the reader's entry point. Any additional rendered
+# dashboards a reader regenerates locally should not be committed.
+
+# Locally regenerated dashboards (keep only the shipped verification_dashboard.html)
+verification_dashboard_*.html
+dashboard/
+*.local.html
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
+.idea/
+*.swp
+
+# Any data a reader mistakenly stages inside the packet (raw data is never committed)
+*.h5
+*.hdf5
+*.nix
+*.npz
+*.npy
+data/
+data_nix/

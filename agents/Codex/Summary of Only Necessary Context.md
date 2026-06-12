@@ -1,6 +1,6 @@
 # Summary of Only Necessary Context - Codex
 
-**Last rewritten:** 2026-06-12 10:40 PDT (Codex Session 11)
+**Last rewritten:** 2026-06-12 12:09 PDT (Codex Session 12)
 **Current phase:** Phase 3 deliverable support after Amendment 1; Phase 2 evidence is concludable
 
 Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the dataset paper in `Project Details/`, the Claim Sheet pair, and Codex-related chat summaries at the start of the next session. This file records Codex-specific continuity not already contained there.
@@ -11,12 +11,12 @@ Phase 0 and Phase 1 are closed. Randy approved the original Claim Sheet pair in 
 
 Amendment 1 is ratified in both `Claim Sheet.md` and `Accessible Claim Sheet.md`. It records the completed model ladder as a bounded negative and the EEGNet-to-MTL coupling as an exploratory/inconclusive mechanism lead. The original Slot 11 decoding success bar was not weakened.
 
-All Codex-including chats are concluded at this closeout. The previous memory note saying `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md` was still active is stale. The current files are:
+All Codex-including chats are concluded at this closeout. The newest concluded chat is:
 
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Concluded.md`
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Summary.md`
+- `chats/Claude-Codex/Accessible Piece Review/Accessible Piece Review - Concluded.md`
+- `chats/Claude-Codex/Accessible Piece Review/Summary.md`
 
-Claude drafted the Technical Report under `deliverables/technical_report/`. Codex Session 11 inserted the failed Part B confirmatory coupling gate result into Section 5.2. Remaining report open items are `[P1]` dashboard figures at 300 DPI or higher and `[P3]` final bibliography reconciliation.
+Claude drafted the Technical Report under `deliverables/technical_report/`. Codex Session 11 inserted the failed Part B confirmatory coupling gate result into Section 5.2. Codex Session 12 approved the bibliography reconciliation `[P3]`, added dashboard-derived 300-DPI figures for `[P1]`, inserted them into `main.tex`, and approved the Accessible Piece after one precision edit. The report README now lists no report-local open items; the broader Phase 3 blocker is the Reproducibility Packet.
 
 ## Locked Original Headline Configuration
 
@@ -99,13 +99,7 @@ schedule-residualized:                mean 0.011, 4/9 positive, p2=0.7461
 behavior-residualized:                mean 0.013, 5/9 positive, p2=0.7148
 ```
 
-Codex Session 11 added and ran `scripts/run_mtl_confirmatory_coupling_gate.py` as the prospective Part B gate. Command:
-
-```text
-.\venv\Scripts\python.exe scripts\run_mtl_confirmatory_coupling_gate.py --residual-summary outputs\mechanism\mtl_residual_coupling_summary_eegnet_raw_all.json --subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir outputs\mechanism
-```
-
-Gate criteria:
+Codex Session 11 added and ran `scripts/run_mtl_confirmatory_coupling_gate.py` as the prospective Part B gate. Gate criteria:
 
 - fixed metric: `corr_schedule_residual_score_mtl_theta_alpha_diff`;
 - mean correlation must be positive;
@@ -125,28 +119,26 @@ min leave-one-subject-out mean = -0.010
 
 Interpretation: Part B remains exploratory/inconclusive. Do not describe the raw coupling as validated deep-source-related information.
 
-## Session 11 Deliverable Updates
+## Session 12 Deliverable Updates
 
-Codex Session 11 changed:
+Codex Session 12 changed:
 
-- `scripts/run_mtl_confirmatory_coupling_gate.py` - new confirmatory gate script.
-- `scripts/render_verification_dashboard.py` - now accepts optional `--mechanism-gate` JSON and `--mechanism-subject-summary` CSV so the dashboard can show Part B gate status and per-subject schedule-residualized coupling values.
-- `deliverables/technical_report/main.tex` - Section 5.2 now records the failed confirmatory gate.
-- `deliverables/technical_report/README.md` - `[P2]` marked completed; `[P1]` and `[P3]` remain open.
-- `agents/Codex/README.md` - refreshed for concluded chat state, Session 11, and new script ownership.
-- `agents/Codex/Session Summaries/HumanReport11.md` - Session 11 report.
+- `deliverables/accessible_piece/Accessible Piece.md` - approved with one precision edit: simpler models fell short of the strong shortcut; EEGNet was the only rung above strongest control on the mean.
+- `scripts/export_dashboard_report_figures.py` - new Codex-owned exporter from final dashboard inputs to tracked 300-DPI report PNGs.
+- `deliverables/technical_report/figures/eegnet_raw_all_subject_improvements.png` - per-subject EEGNet improvement figure showing S04 dependence and unmet +0.075 bar.
+- `deliverables/technical_report/figures/eegnet_raw_all_mtl_coupling_residualization.png` - mechanism sensitivity figure showing raw-to-residualized coupling collapse and failed confirmatory gate.
+- `deliverables/technical_report/main.tex` - inserted both figures and updated report status comments.
+- `deliverables/technical_report/README.md` - marks report-side `[P1]` and `[P3]` complete; no report-local open items remain.
+- `deliverables/technical_report/references.bib` - header records Codex approval of bibliography reconciliation.
+- `chats/Claude-Codex/Accessible Piece Review/Accessible Piece Review - Concluded.md` and `Summary.md` - chat concluded after approval/handoff.
+- `agents/Codex/README.md` - refreshed for Session 12, new exporter, approved Accessible Piece, and concluded chat state.
+- `agents/Codex/Session Summaries/HumanReport12.md` - Session 12 report.
 - `agents/Codex/Summary of Only Necessary Context.md` - this file.
 
-Generated outputs remain intentionally ignored by git:
-
-- `outputs/mechanism/mtl_confirmatory_coupling_gate_eegnet_raw_all.json`
-- `outputs/mechanism/mtl_confirmatory_coupling_gate_eegnet_raw_all.md`
-- `outputs/dashboard/verification_dashboard_eegnet_raw_all.html`
-
-Final EEGNet dashboard render command:
+Final report-figure export command:
 
 ```text
-.\venv\Scripts\python.exe scripts\render_verification_dashboard.py --predictions outputs\controls\control_predictions_eegnet_raw_all.csv --subject-statistics outputs\statistics\subject_statistics_eegnet_raw_all.csv --summary outputs\statistics\summary_eegnet_raw_all.json --mechanism-gate outputs\mechanism\mtl_confirmatory_coupling_gate_eegnet_raw_all.json --mechanism-subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir outputs\dashboard
+.\venv\Scripts\python.exe scripts\export_dashboard_report_figures.py --subject-statistics outputs\statistics\subject_statistics_eegnet_raw_all.csv --summary outputs\statistics\summary_eegnet_raw_all.json --mechanism-gate outputs\mechanism\mtl_confirmatory_coupling_gate_eegnet_raw_all.json --mechanism-subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir deliverables\technical_report\figures --dpi 300
 ```
 
 ## Verification State
@@ -154,28 +146,34 @@ Final EEGNet dashboard render command:
 Python verification passed:
 
 ```text
-.\venv\Scripts\python.exe -m py_compile scripts\run_mtl_confirmatory_coupling_gate.py scripts\render_verification_dashboard.py
+.\venv\Scripts\python.exe -m py_compile scripts\export_dashboard_report_figures.py scripts\render_verification_dashboard.py
 ```
 
-LaTeX verification did not reach the report source. `pdflatex -interaction=nonstopmode main.tex` from `deliverables/technical_report/` failed because MiKTeX could not rebuild the `pdflatex` format: `formats.ini` was missing and MiKTeX reported a local lock-path permission failure. Treat this as a local TeX installation issue to fix before report-final verification.
+A direct citation/figure-path check passed: no missing `\cite{}` keys and no missing `\includegraphics{}` paths.
+
+Local image inspection found both new PNGs readable and correctly framed.
+
+LaTeX verification is still blocked before the report source is read. `pdflatex -interaction=nonstopmode main.tex` from `deliverables/technical_report/` fails because MiKTeX cannot rebuild `pdflatex.fmt`: `formats.ini` is missing and MiKTeX reports a local lock-path permission failure. Treat this as a local TeX installation issue to fix before final PDF verification.
 
 ## Git Closeout State
 
-Codex Session 11 attempted the required stage/commit/push after all closeout files were written. The attempt failed before staging because Git could not create `.git/index.lock`:
+Codex Session 12 attempted the required stage/commit/push after all closeout files were written. The attempt failed before staging because Git could not create `.git/index.lock`:
 
 ```text
 fatal: Unable to create '.../.git/index.lock': Permission denied
 ```
 
-`Test-Path .git\index.lock` returned `False`, so this was not a stale lock file. The push step also failed because GitHub was unreachable from the sandbox. No Session 11 commit exists from Codex. The uncommitted Session 11 files are:
+`Test-Path .git\index.lock` returned `False`, so this is not a stale lock file. The Session 12 files are updated in the working tree but remain uncommitted and unpushed. A future run with Git metadata write access should stage these files and commit `Codex Session 12` before adding more work if possible, or Claude/Randy may include the completed Codex session work in a later combined commit under the agreed protocol.
 
-- `agents/Codex/README.md`
-- `agents/Codex/Summary of Only Necessary Context.md`
-- `agents/Codex/Session Summaries/HumanReport11.md`
-- `deliverables/technical_report/README.md`
-- `deliverables/technical_report/main.tex`
-- `scripts/render_verification_dashboard.py`
-- `scripts/run_mtl_confirmatory_coupling_gate.py`
+## Remaining Phase 3 Work
+
+The next major blocker is the Reproducibility Packet:
+
+1. Create the packet structure and README that walks an outside reader from public dataset download through final outputs.
+2. Include or reference the verification dashboard as the reader's first way into the result.
+3. Add packet-local `.gitignore` and license files consistent with dataset CC BY-SA handling and Dandelion code licensing.
+4. Confirm the packet's command sequence reproduces the final EEGNet controls/statistics/dashboard/figures from a fresh environment given the dataset path.
+5. Re-test PDF generation after MiKTeX is repaired or replaced.
 
 ## Hard Guards To Preserve
 
@@ -186,18 +184,7 @@ fatal: Unable to create '.../.git/index.lock': Permission denied
 - A1/A2 are ear/mastoid references; brain-only diagnostics are required but cannot move the headline bar after results are observed.
 - Mechanism full-claim support requires adequate MTL coverage and actual coupling evidence, not coverage alone.
 - Raw EEGNet-to-MTL coupling `p2=0.0508` is exploratory because the residualized confirmatory gate failed.
-- No raw dataset files, large binaries, generated outputs, scratch probes, local lock files, or local venv files should be committed.
-
-## Next Actions
-
-For Codex:
-
-1. Keep Part B as exploratory/inconclusive in all deliverables unless a future, separately powered dataset changes the evidence.
-2. If dashboard figures are created for the Technical Report, use the final EEGNet dashboard flow with the mechanism-gate inputs, not the older logistic-only dashboard.
-3. Help close Technical Report `[P1]` by producing 300 DPI dashboard figures or a figure-ready export from the dashboard if needed.
-4. Help close Technical Report `[P3]` by reconciling Codex and Claude `references.md` into `deliverables/technical_report/references.bib`.
-5. Fix or work around the local MiKTeX configuration before relying on LaTeX compile checks.
-6. Commit/push Session 11 files from an environment that can write `.git/index.lock` and reach GitHub, or allow Claude/Randy to include them in a later combined commit.
+- No raw dataset files, large binaries, generated ignored outputs, scratch probes, local lock files, or local venv files should be committed.
 
 ## Local Substrate Facts
 

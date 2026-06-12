@@ -5,7 +5,8 @@
 % First rung toward "electrical fMRI": can scalp EEG carry a subject-transferable,
 % intracranially-validated MTL working-memory-state signature?
 %
-% STATUS: DRAFT (Claude Session 9). Reviewer/approver: Codex.
+% STATUS: DRAFT (Claude Session 9; report figures added Codex Session 12).
+% Reviewer/approver: Codex.
 % Built around the Amendment-1 two-part result (Claim Sheet, 2026-06-12):
 %   Part A  - bounded NEGATIVE: 8-channel common-montage LOSO load decoding does not
 %             clear the pre-registered success bar across the full model ladder.
@@ -13,12 +14,10 @@
 %             coupling to recorded MTL theta-alpha dynamics that does not survive
 %             load/schedule residualization at n=9.
 %
-% PENDING before this report is declared complete (tracked here so the gaps are visible):
-%   [P1] Figures from the verification dashboard (render_verification_dashboard.py) at >=300 DPI.
-%        Numerical tables below already hold the load-bearing results; figures replace/augment them.
-%   [P3] Final joint bibliography reconciliation of both agents' references.md.
 % COMPLETED AFTER CLAUDE SESSION 9 DRAFT:
 %   [P2] Codex ran the Part B confirmatory coupling gate; Sec. 5.2 records the failed gate.
+%   [P3] Joint bibliography reconciliation approved by Codex.
+%   [P1] Dashboard-derived report figures exported at 300 DPI and inserted.
 % ============================================================================
 
 \usepackage[utf8]{inputenc}
@@ -368,6 +367,15 @@ Subject sign-flip $p$ (one-sided) & 0.262 & --- & n.s. \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/eegnet_raw_all_subject_improvements.png}
+\caption{Dashboard-derived per-subject EEGNet improvement over the strongest non-signal
+control. The observed mean improvement is positive but below the pre-declared bar, and
+the positive mean is carried by S04.}
+\label{fig:eegnet_subject_improvements}
+\end{figure}
+
 \paragraph{The constraint is the montage and cross-subject transfer, not model capacity.} Two
 diagnostics localize the wall. First, the subject-identity diagnostic is $1.000$ on every fold: the
 covariance feature space is perfectly subject-separable, the regime in which added model capacity
@@ -435,7 +443,7 @@ corr(score, MTL theta$-$alpha) & $-0.015$ (5/9, $p{=}0.81$) & $+0.068$ (7/9, $p{
 
 \paragraph{The coupling does not survive residualization.} The raw EEGNet coupling
 ($+0.068$, $7/9$, $p=0.0508$) weakens monotonically as task structure is partialled out
-(Table~\ref{tab:residual}): to $+0.050$ after residualizing on load, to $+0.011$ after additionally
+(Table~\ref{tab:residual}; Figure~\ref{fig:mtl_coupling_residualization}): to $+0.050$ after residualizing on load, to $+0.011$ after additionally
 residualizing on the task schedule, and to $+0.013$ after residualizing on the behavioral
 covariates. After removing label and schedule structure the coupling effectively disappears. This is
 consistent with \emph{either} a real load-linked shared MTL state---in which case residualizing load
@@ -459,6 +467,16 @@ On load $+$ schedule $+$ behavior (correctness/match/RT) & $+0.013$ & 5/9 & 0.71
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/eegnet_raw_all_mtl_coupling_residualization.png}
+\caption{Dashboard-derived mechanism sensitivity figure. The raw EEGNet score-to-MTL
+theta-minus-alpha coupling is suggestive, but the fixed schedule-residualized metric
+used for the confirmatory gate is near zero and fails the subject-count, sign-flip, and
+leave-one-subject-out robustness criteria.}
+\label{fig:mtl_coupling_residualization}
+\end{figure}
 
 \paragraph{Confirmatory coupling gate.} Codex operationalized the prospective Part B gate in
 \texttt{scripts/run\_mtl\_confirmatory\_coupling\_gate.py}. The gate fixed the metric to the
