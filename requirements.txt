@@ -7,9 +7,11 @@
 #   numpy BSD-3 | scipy BSD-3 | h5py BSD-3 | nixio BSD | pandas BSD-3
 #   scikit-learn BSD-3 | matplotlib (PSF-based, BSD-compatible) | pyarrow Apache-2.0
 #
-# Data layer (current). Modeling rungs add their own pins when reached:
-#   pyriemann (filter-bank covariance / Riemannian) — BSD-3, later
-#   torch (CUDA, 8 GB-sized) — BSD, only at the EEGNet rung
+# Modeling rungs are dependency-free by design (efficiency standard + this machine's
+# constraints): rung 3 Riemannian geometry is hand-rolled in utils/riemann.py, and rung 4
+# EEGNet is hand-rolled in utils/eegnet.py (NumPy, gradient-checked). torch is intentionally
+# NOT installed — the C: drive cannot host it (< 4 GB free). pyriemann/torch are both
+# BSD/commercial-OK if a future project ever needs them; pin here when added.
 
 numpy==2.4.6
 scipy==1.17.1

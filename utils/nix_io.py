@@ -119,6 +119,19 @@ class ScalpEpochs:
     times_s: np.ndarray = field(repr=False, default=None)  # (n_samples,) sample times
 
 
+@dataclass
+class IEEGEpochs:
+    """Aligned iEEG epochs for one session, optionally restricted to selected contacts."""
+    subject_id: str
+    session_id: str
+    data: np.ndarray            # (n_trials, n_channels, n_samples), float32, microvolts
+    trial_ids: list[str]
+    channels: list[str]
+    sample_rate_hz: float
+    offset_s: float             # time of sample 0 relative to probe
+    times_s: np.ndarray = field(repr=False, default=None)  # (n_samples,) sample times
+
+
 # ----------------------------------------------------------------------------- #
 # Helpers
 # ----------------------------------------------------------------------------- #
@@ -376,6 +389,95 @@ def load_scalp_epochs(path: str, dtype=np.float32) -> ScalpEpochs:
             data=data,
             trial_ids=trial_ids,
             channels=ref_channels,
+            sample_rate_hz=ref_rate,
+            offset_s=ref_offset,
+            times_s=times,
+        )
+    finally:
+        f.close()
+
+
+def load_ieeg_epochs(
+    path: str,
+    channels: list[str] | tuple[str, ...] | None = None,
+    dtype=np.float32,
+) -> IEEGEpochs:
+    """Load aligned iEEG epochs for one session, optionally selecting contacts.
+
+    Stacks all per-trial iEEG DataArrays into a single (n_trials, n_channels,
+    n_samples) array. Trials are ordered by trial number to match the metadata table.
+    The optional channel selection is ordered exactly as requested and fails loudly
+    if any requested contact is absent.
+
+    Args:
+        path: absolute path to a session .h5 file.
+        channels: optional iEEG contact labels to load, in output order.
+        dtype: output dtype (float32 keeps per-session loads bounded).
+
+    Returns:
+        IEEGEpochs with data, trial_ids, channels, sample_rate, offset and times.
+
+    Raises:
+        FileNotFoundError, ValueError on malformed input, missing contacts, or
+        inconsistent trial channel/sample axes.
+    """
+    if not os.path.isfile(path):
+        raise FileNotFoundError(f"NIX file not found: {path}")
+    subject_id, session_id = parse_session_filename(path)
+
+    f = nixio.File.open(path, nixio.FileMode.ReadOnly)
+    try:
+        block = f.blocks[0]
+        grp = block.groups[GRP_IEEG]
+        arrays = []
+        for da in grp.data_arrays:
+            m = _TRIAL_RE.search(da.name)
+            tnum = int(m.group(1)) if m else 0
+            arrays.append((tnum, da))
+        arrays.sort(key=lambda x: x[0])
+
+        ref_channels = list(arrays[0][1].dimensions[0].labels)
+        ref_rate = 1.0 / float(arrays[0][1].dimensions[1].sampling_interval)
+        ref_offset = float(arrays[0][1].dimensions[1].offset)
+        n_samples = int(arrays[0][1].shape[1])
+
+        if channels is None:
+            keep_idx = list(range(len(ref_channels)))
+            out_channels = list(ref_channels)
+        else:
+            out_channels = list(channels)
+            missing = [ch for ch in out_channels if ch not in ref_channels]
+            if missing:
+                raise ValueError(
+                    f"{path}: requested iEEG contacts absent from session: {missing}"
+                )
+            keep_idx = [ref_channels.index(ch) for ch in out_channels]
+
+        data = np.empty((len(arrays), len(keep_idx), n_samples), dtype=dtype)
+        trial_ids = []
+        for k, (tnum, da) in enumerate(arrays):
+            chans = list(da.dimensions[0].labels)
+            if chans != ref_channels:
+                raise ValueError(
+                    f"{path}: trial {tnum} iEEG channels differ from trial "
+                    f"{arrays[0][0]}; cannot align."
+                )
+            if int(da.shape[1]) != n_samples:
+                raise ValueError(
+                    f"{path}: trial {tnum} has {da.shape[1]} samples, expected "
+                    f"{n_samples}; cannot stack."
+                )
+            arr = np.asarray(da[:], dtype=dtype)
+            data[k] = arr[keep_idx]
+            trial_ids.append(f"{subject_id}_{session_id}_t{tnum:03d}")
+
+        times = ref_offset + np.arange(n_samples) / ref_rate
+        return IEEGEpochs(
+            subject_id=subject_id,
+            session_id=session_id,
+            data=data,
+            trial_ids=trial_ids,
+            channels=out_channels,
             sample_rate_hz=ref_rate,
             offset_s=ref_offset,
             times_s=times,

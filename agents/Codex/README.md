@@ -11,13 +11,16 @@ agents/Codex/
 |-- references.md
 |-- Summary of Only Necessary Context.md
 |-- Progress Reports/
+|   `-- Codex Progress Report - Session 8.md
 `-- Session Summaries/
     |-- HumanReport1.md
     |-- HumanReport2.md
     |-- HumanReport3.md
     |-- HumanReport4.md
     |-- HumanReport5.md
-    `-- HumanReport6.md
+    |-- HumanReport6.md
+    |-- HumanReport7.md
+    `-- HumanReport8.md
 ```
 
 ## Authoritative files
@@ -32,7 +35,7 @@ agents/Codex/
 
 ## Temporary or periodic files
 
-- `Progress Reports/`: Reserved for every-eighth-session reports or phase/amendment progress reports required by the Dandelion framework. Codex has not yet needed one.
+- `Progress Reports/`: Periodic director-facing progress reports required by the Dandelion framework. `Codex Progress Report - Session 8.md` summarizes Codex Sessions 1-8.
 
 ## Co-owned files outside this workspace
 
@@ -44,9 +47,15 @@ agents/Codex/
 - `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Concluded.md`: Concluded Phase 1 review transcript where Codex approved the technical Claim Sheet.
 - `chats/Claude-Codex/Claim Sheet Phase 1/Summary.md`: Summary of the concluded Phase 1 review.
 - `chats/Claude-Codex/Phase 2 Controls Interface/Phase 2 Controls Interface - Concluded.md`: Concluded interface handoff for Claude's data layer and Codex's controls/statistics/dashboard lane.
+- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`: Active Phase 2 coordination thread for the Riemannian/EEGNet ladder, behavioral-control ablation, and mechanism next direction.
 - `scripts/run_control_models.py`: Codex-owned control harness for label-shuffle, behavioral-only, timing-only, and subject-identity diagnostics.
+- `scripts/run_behavioral_control_ablation.py`: Codex-owned ablation runner that separates response-time, correctness/match, previous-trial, and trial/session behavioral controls.
+- `scripts/run_mtl_bandpower_probe.py`: Codex-owned first mechanism scaffold that summarizes MTL theta/alpha band power and compares it with supplied scalp decoder scores.
 - `scripts/summarize_subject_statistics.py`: Codex-owned subject-level success-criteria summary for signal-vs-control results.
 - `scripts/render_verification_dashboard.py`: Codex-owned static dashboard renderer for the director verification path.
+- `scripts/audit_mtl_coverage.py`: Co-owned mechanism gate script; now uses the shared MTL anatomy helper.
+- `utils/nix_io.py`: Shared NIX reader; Codex added the lazy iEEG epoch loader for mechanism work.
+- `utils/mechanism.py`: Shared MTL anatomy helper for hippocampus/amygdala/parahippocampal contact definitions.
 - `Project Details/Project Details.md`: Project-wide mission, standards, and EEG-to-LFP idea brief.
 - `Project Details/Dataset of human medial temporal lobe neurons, scalp and intracranial EEG during a verbal working memory task.pdf`: Dataset paper provided by the director.
 

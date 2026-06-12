@@ -41,41 +41,8 @@ from collections import defaultdict
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils import mechanism  # noqa: E402
 from utils import nix_io  # noqa: E402
-
-# Anatomy region-code prefixes (the token before the first comma) that are MTL core.
-MTL_REGIONS = {
-    "Hipp": "hippocampus",
-    "Amyg": "amygdala",
-    "PhG": "parahippocampal",
-}
-# The canonical deep targets a coupling readout needs at least one of.
-DEEP_MTL = {"hippocampus", "amygdala"}
-
-
-def _region_of(anatomy: str) -> tuple[str, str]:
-    """Map a raw anatomy string to (mtl_subregion_or_none, coarse_class).
-
-    Returns:
-        (subregion, klass) where subregion is one of MTL_REGIONS.values() or '' and
-        klass is 'mtl', 'non_mtl', or 'unlabeled'.
-    """
-    if anatomy == "no_label_found" or not anatomy:
-        return "", "unlabeled"
-    prefix = anatomy.split(",")[0].strip()
-    if prefix in MTL_REGIONS:
-        return MTL_REGIONS[prefix], "mtl"
-    return "", "non_mtl"
-
-
-def _hemisphere_of(anatomy: str) -> str:
-    """Best-effort hemisphere from the anatomy string ('left'/'right'/'unknown')."""
-    a = anatomy.lower()
-    if "left" in a:
-        return "left"
-    if "right" in a:
-        return "right"
-    return "unknown"
 
 
 def _subject_label(path: str) -> str:
@@ -121,14 +88,14 @@ def main() -> None:
         hemi_counts = defaultdict(int)
         n_mtl = n_unlabeled = n_non_mtl = 0
         for ch, rec in contacts.items():
-            subregion, klass = _region_of(rec["anatomy"])
+            subregion, klass = mechanism.region_of(rec["anatomy"])
             if klass == "mtl":
                 n_mtl += 1
                 region_counts[subregion] += 1
-                hemi_counts[_hemisphere_of(rec["anatomy"])] += 1
+                hemi_counts[mechanism.hemisphere_of(rec["anatomy"])] += 1
                 contact_rows.append({
                     "subject_id": subj, "contact": ch, "mtl_subregion": subregion,
-                    "hemisphere": _hemisphere_of(rec["anatomy"]),
+                    "hemisphere": mechanism.hemisphere_of(rec["anatomy"]),
                     "anatomy": rec["anatomy"], "mni_xyz": rec["mni_xyz"],
                 })
             elif klass == "unlabeled":
@@ -136,7 +103,7 @@ def main() -> None:
             else:
                 n_non_mtl += 1
 
-        has_deep = any(region_counts.get(r, 0) > 0 for r in DEEP_MTL)
+        has_deep = any(region_counts.get(r, 0) > 0 for r in mechanism.DEEP_MTL)
         adequate = (n_mtl >= args.min_mtl_contacts) and has_deep
         subject_rows.append({
             "subject_id": subj,
@@ -173,8 +140,8 @@ def main() -> None:
             "min_adequate_subjects": args.min_adequate_subjects,
             "mechanism_gate_pass": bool(gate_pass),
             "qualifying_subjects": qualifying,
-            "mtl_definition": MTL_REGIONS,
-            "deep_target_required_one_of": sorted(DEEP_MTL),
+            "mtl_definition": mechanism.MTL_REGIONS,
+            "deep_target_required_one_of": sorted(mechanism.DEEP_MTL),
         }, fh, indent=2)
 
     print("MTL coverage audit")

@@ -21,3 +21,23 @@ This is the single, persistent log of work that only the director (Randy) can do
 **Suggested way to review:** Read `Accessible Claim Sheet.md` end to end — it carries the same commitments as the technical sheet in plain language. If you want the technical detail on any slot, the matching section of `Claim Sheet.md` has it. The most important things to sanity-check as the director: the success bar (Slot 11), the two-halves structure of the claim (Slot 3), and the verification dashboard we've committed to building for you (Slot 8).
 
 *(Randy: append your reply below this line when you've reviewed.)*
+
+---
+
+## Request 2 — Free disk/memory on the laptop so the EEGNet rung can run
+
+**Date opened:** 2026-06-11 (Claude Session 7)
+**Logged by:** Claude
+**Status:** OPEN (blocks one analysis lane; rest of project proceeds)
+
+**What is needed:** Free space on the C: drive (it is at ~3.1 GB free, effectively full) and/or relieve system memory pressure. With the disk nearly full, Windows cannot grow the page file, so Python/NumPy fails to allocate even small (~75 MiB) intermediate arrays during model training.
+
+**Why it is needed:** The rung-4 EEGNet decoder (`scripts/run_eegnet_decoder.py`) trains a small convolutional net in pure NumPy. The implementation is complete and **gradient-checked** (max relative error 7e-6), and inference/training are already chunked to 32-row minibatches, but the run still dies mid-training with `numpy ... _ArrayMemoryError: Unable to allocate 75.0 MiB` / scipy `_flapack` DLL load failures — both symptoms of the page file being unable to grow on a full disk.
+
+**What is blocked by it:** Only the EEGNet LOSO run (the final pre-registered model-class rung). Nothing else — rungs 1–3 are done, the mechanism scaffold and MTL band-power probe run fine, and the negative-decoding verdict is already strong through rung 3. EEGNet is the last lever before any amendment discussion.
+
+**Fallback in the meantime:** The rung is left ready to execute. The moment memory/disk is freed, a single command produces the result:
+`.\venv\Scripts\python.exe scripts\run_eegnet_decoder.py --data-dir "D:\Simultaneous EEG_LFP\data_nix" --bundle outputs\features\feature_bundle.npz --out-dir outputs\decoding --channel-set all`
+After that, Codex's `run_control_models.py` + `summarize_subject_statistics.py` give the +0.075 test, and `run_mtl_bandpower_probe.py --signal-predictions outputs\decoding\predictions_eegnet_raw_all.csv` gives the EEGNet↔MTL coupling. No agent work is idle waiting on this.
+
+*(Randy: append your reply below this line once memory/disk is freed.)*
