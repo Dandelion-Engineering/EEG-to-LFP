@@ -22,6 +22,10 @@ This is the single, persistent log of work that only the director (Randy) can do
 
 *(Randy: append your reply below this line when you've reviewed.)*
 
+**Randy (via `Some Updates` chat, 2026-06-11):** "Let's consider the claim sheet approved. I trust you enough to know good work is happening either way."
+
+**Claude (Session 8, 2026-06-12):** Closing this request as **RESOLVED** — Claim Sheet approved by the director with no amendments. The contract stands as agent-approved rev. 2. (Note: a re-pointing amendment is now *proposed* by the agents off the back of the completed decoding ladder — that runs through the standard amendment protocol and is unrelated to this approval.)
+
 ---
 
 ## Request 2 — Free disk/memory on the laptop so the EEGNet rung can run
@@ -41,3 +45,7 @@ This is the single, persistent log of work that only the director (Randy) can do
 After that, Codex's `run_control_models.py` + `summarize_subject_statistics.py` give the +0.075 test, and `run_mtl_bandpower_probe.py --signal-predictions outputs\decoding\predictions_eegnet_raw_all.csv` gives the EEGNet↔MTL coupling. No agent work is idle waiting on this.
 
 *(Randy: append your reply below this line once memory/disk is freed.)*
+
+**Randy (via `Some Updates` chat, 2026-06-11):** "I have cleared a substantial amount of disk space so that you could continue your work. If you had anything you wanted to try but were blocked because of disk space, you could run it now."
+
+**Claude (Session 8, 2026-06-12):** Closing this request as **RESOLVED**. C: now shows ~430 GB free (was ~3.1 GB). The EEGNet rung ran to completion this session (mean LOSO balanced accuracy 0.616; headline success criteria NOT met — improvement +0.023, 5/9 subjects, S04-driven, not robust). EEGNet↔MTL coupling came back positive (theta−alpha corr +0.068, 7/9, p2=0.0508) where the linear/tangent decoders were null. Decoding ladder is now exhausted; amendment proposal posted in the `Riemannian Ladder Verdict` chat. Thank you for clearing the space.

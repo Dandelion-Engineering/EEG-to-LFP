@@ -2,7 +2,7 @@
 
 **Project:** Dandelion Collaboration Station — EEG to LFP
 **Companion to:** `Claim Sheet.md` (the technical contract). This document carries the *same* commitments in plain language.
-**Written by:** Claude (Session 3, 2026-06-11). **Status:** Phase 1 closed; this is the director's reference companion.
+**Written by:** Claude (Session 3, 2026-06-11). **Status:** Phase 2 — **Amendment 1 ratified 2026-06-12** (see the *Amendment 1* section at the very bottom). You approved the original plan as-is on 2026-06-11. The body below is the original plan, preserved unchanged; the **Amendment 1 section at the end is the current direction** and is the most important part to read now.
 
 > **What this document is.** The technical Claim Sheet is the contract the agents work against, and it's written in the language of the people doing the engineering — so it gets dense. This is the same contract, same promises, written for you, Randy. If anything here and the technical sheet ever disagree, that's a defect and we fix it the same session. You should be able to read this top to bottom and come away knowing exactly what we've committed to — without opening the technical sheet alongside it.
 
@@ -157,3 +157,37 @@ We write these down *now*, before running anything, so we can't move the goalpos
 ## What happens next
 
 The technical Claim Sheet is approved by both agents and Phase 1 is now closed. We've logged a note for you in `director_requests.md` that the Claim Sheet is **ready for your review** whenever you have time — there's nothing blocking us, so we proceed into Phase 2 (building the data reader and counting trials) in the meantime. If you read it and want changes, that just kicks off our normal amendment process; if you approve as-is, we keep going on the current plan.
+
+---
+
+## Amendment 1 (ratified 2026-06-12) — what we found, and how the plan changed
+
+*This section is the current direction of the project. Everything above is the original plan, kept for the record. If you read only one thing, read this.*
+
+### The short version
+
+We finished testing the full set of models we promised to try, and we got a clear, honest answer to the project's first question: **no, a cheap 8-channel scalp EEG cannot reliably tell how hard a stranger's memory is working — not with any model on our list.** That's a real result, not a dead end: we mapped exactly where the wall is. The more interesting thread is the second half — whether the scalp signal is genuinely tied to the *deep* memory activity. There we found a **suggestive but unproven** hint: our best model's output did line up with the real deep-brain memory rhythm in 7 of 9 people, but the hint **faded when we controlled for simpler explanations**, so we're reporting it honestly as "a promising lead worth chasing with a bigger dataset," not as a proven discovery.
+
+### What we actually found
+
+- **The decoding question (Half A) — answered, and the answer is "no" for this setup.** We climbed our whole ladder of models, ending with a small neural network (EEGNet). It was the best of the bunch and the only one to edge past the fair baseline *on average* — but it failed our pre-set passing grade, and it failed it the honest way: the entire advantage came from a single lucky person (out of nine), and our pre-committed "no one person can carry the result" rule caught exactly that. So across every model we promised to try, scalp EEG from this 8-channel setup does **not** read memory load in a way that transfers to a new person. We also confirmed this isn't an artifact of the ear-reference electrodes (dropping them changed nothing).
+
+- **The deep-brain question (Half B) — a real but unproven lead.** The genuine deep memory rhythm (a theta-vs-alpha pattern) was clearly present in the inside-the-brain recordings. And encouragingly, our best scalp model's output *tracked* that deep rhythm in 7 of 9 people — where the simpler earlier models had tracked it not at all. **But** when we statistically removed simpler explanations (could the match just be because both reflect "the task is hard right now"?), the connection mostly dissolved. With only 9 people, this dataset honestly can't tell apart "a real faint deep signal" from "a shared by-product of task difficulty." So we record it as **exploratory** — the single most promising next thing to test, not a result we can stand behind yet.
+
+### How the plan changed (and what *didn't* change)
+
+The honest headline of the project shifts from *"scalp EEG beats the baseline at reading memory load"* (which we now know it doesn't, here) to a **two-part result**:
+
+1. **A clean, well-characterized "negative":** here is exactly where and why an 8-channel scalp cap can't transfer-read memory load — useful knowledge for the whole long-term effort, because it tells the next project not to expect this from so few channels.
+2. **A promising, unproven lead:** the deep-coupling thread, reported with all its caveats, pointing at what to test next with more people or better-placed sensors.
+
+**What did *not* change, on purpose:** we did **not** lower the original passing grade to manufacture a win. The bar stayed exactly where we set it before seeing any data; the models simply didn't clear it. This is the project's honesty machinery doing its job — both of these outcomes (a "clean failure" and an "inconclusive mechanism") were written down as named possibilities *before* we ran anything. We're just reporting which ones came true. A clean, honest negative is still a real public contribution.
+
+### What happens next
+
+- One more focused, pre-registered check on the deep-coupling lead (Codex's task) — this time with the stricter controls built in from the start, so the result can't flatter itself.
+- After that, we're likely moving to **writing up the project** (the Technical Report, the plain-language Accessible Piece, and the reproducibility package with your verification dashboard), since the project now has a complete, concludable result.
+
+### Why this is a good outcome, not a disappointment
+
+Dandelion's whole model is that a clean failure, honestly reported, is worth as much as a success — it saves the next effort from a wrong turn. We set out to find the smallest honest first rung toward "electrical fMRI." We found that *this particular* first rung (8 scalp channels, 9 people, cross-person) doesn't hold weight — and we found the most likely *next* foothold (the deep theta-alpha coupling) in the process. That's exactly the kind of result the slow, careful, no-rush approach is built to produce.
