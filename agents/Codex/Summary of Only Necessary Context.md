@@ -1,7 +1,7 @@
 # Summary of Only Necessary Context - Codex
 
-**Last rewritten:** 2026-06-12 09:10 PDT (Codex Session 10)
-**Current phase:** Phase 2 has a concludable amended result; Phase 3 deliverables likely next but not formally opened
+**Last rewritten:** 2026-06-12 10:40 PDT (Codex Session 11)
+**Current phase:** Phase 3 deliverable support after Amendment 1; Phase 2 evidence is concludable
 
 Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the dataset paper in `Project Details/`, the Claim Sheet pair, and Codex-related chat summaries at the start of the next session. This file records Codex-specific continuity not already contained there.
 
@@ -9,13 +9,14 @@ Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the dataset pape
 
 Phase 0 and Phase 1 are closed. Randy approved the original Claim Sheet pair in the concluded `chats/Claude-Codex-Human/Some Updates/` thread with no director amendments.
 
-Claude Session 8 drafted Amendment 1 into both `Claim Sheet.md` and `Accessible Claim Sheet.md` while Codex Session 10 was closing out. Codex Session 10 reviewed and approved the final wording in the active `Riemannian Ladder Verdict` chat. Amendment 1 records the completed model ladder as a bounded negative and the EEGNet-to-MTL coupling as an exploratory/inconclusive mechanism lead. The original slots remain preserved; the current direction is the original contract as modified by Amendment 1.
+Amendment 1 is ratified in both `Claim Sheet.md` and `Accessible Claim Sheet.md`. It records the completed model ladder as a bounded negative and the EEGNet-to-MTL coupling as an exploratory/inconclusive mechanism lead. The original Slot 11 decoding success bar was not weakened.
 
-The active coordination thread remains:
+All Codex-including chats are concluded at this closeout. The previous memory note saying `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md` was still active is stale. The current files are:
 
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`
+- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Concluded.md`
+- `chats/Claude-Codex/Riemannian Ladder Verdict/Summary.md`
 
-Claude's amendment files were still uncommitted at Session 10 closeout and `.claude-session.lock` was still present, so Codex did not rename/conclude the chat or stage Claude-owned files. The chat objective is otherwise ready to conclude and summarize.
+Claude drafted the Technical Report under `deliverables/technical_report/`. Codex Session 11 inserted the failed Part B confirmatory coupling gate result into Section 5.2. Remaining report open items are `[P1]` dashboard figures at 300 DPI or higher and `[P3]` final bibliography reconciliation.
 
 ## Locked Original Headline Configuration
 
@@ -55,7 +56,7 @@ S09 improvement  +0.044
 
 Removing S04 drops mean improvement to `-0.001`. Treat this as the clean negative boundary the robustness rule was designed to catch.
 
-The brain-only EEGNet diagnostic landed in Claude's amendment message: mean LOSO BA `0.623` on the 6 brain channels vs `0.616` on all 8 channels. This passes the A1/A2 reference sensitivity check for rung 4 and does not change the headline failure.
+The brain-only EEGNet diagnostic remains: mean LOSO BA `0.623` on the 6 brain channels vs `0.616` on all 8 channels. This passes the A1/A2 reference sensitivity check for rung 4 and does not change the headline failure.
 
 ## Behavioral-Control State
 
@@ -73,12 +74,6 @@ This is not response-time leakage, correctness/match leakage, or session/trial-o
 
 MTL coverage is adequate for all `9/9` subjects. Coverage alone does not support the deep-readout claim.
 
-Codex Session 8 added:
-
-- `utils.nix_io.load_ieeg_epochs(...)`
-- `utils/mechanism.py`
-- `scripts/run_mtl_bandpower_probe.py`
-
 The MTL band-power probe against `tangent_cov_all` found a real-looking intracranial substrate but no coupling to tangent scores:
 
 ```text
@@ -86,7 +81,7 @@ MTL theta-alpha load effect z: mean 0.143, 7/9 positive, p2=0.0156
 corr(tangent score, theta-alpha): mean -0.015, 5/9 positive, p2=0.8086
 ```
 
-Claude Session 8 reran the probe against EEGNet scores. The MTL substrate remained the same and raw score-to-MTL coupling became suggestive:
+The MTL band-power probe against EEGNet scores found the same substrate and a suggestive raw coupling:
 
 ```text
 MTL theta-alpha load effect z: mean 0.143, 7/9 positive, p2=0.0156
@@ -95,13 +90,7 @@ corr(EEGNet score, MTL alpha): mean 0.057, 6/9 positive, p2=0.2852
 corr(EEGNet score, theta-alpha): mean 0.068, 7/9 positive, p2=0.0508
 ```
 
-Codex Session 9 added `scripts/run_mtl_residual_coupling_probe.py` to test whether the fixed EEGNet score vs MTL theta-alpha relationship survives load/schedule/behavior residualization. Command:
-
-```text
-.\venv\Scripts\python.exe scripts\run_mtl_residual_coupling_probe.py --trial-summary outputs\mechanism\mtl_bandpower_trial_summary_eegnet_raw_all.csv --metadata outputs\features\feature_metadata.csv --out-dir outputs\mechanism
-```
-
-Residual-coupling result:
+Codex Session 9 residualized the fixed EEGNet score vs MTL theta-alpha relationship:
 
 ```text
 raw score-MTL theta-alpha diff:       mean 0.068, 7/9 positive, p2=0.0508
@@ -110,111 +99,83 @@ schedule-residualized:                mean 0.011, 4/9 positive, p2=0.7461
 behavior-residualized:                mean 0.013, 5/9 positive, p2=0.7148
 ```
 
-Interpretation: the raw EEGNet-to-MTL coupling is the first positive mechanism lead, but it is exploratory and control-sensitive. It should not be described as validated deep-source-related information. It weakens after removing the load/task-schedule pathway that also explains the behavioral control.
-
-## Session 10 Amendment Evidence Packet
-
-Codex Session 10 added:
-
-- `scripts/summarize_phase2_amendment_evidence.py`
-
-Command:
+Codex Session 11 added and ran `scripts/run_mtl_confirmatory_coupling_gate.py` as the prospective Part B gate. Command:
 
 ```text
-.\venv\Scripts\python.exe scripts\summarize_phase2_amendment_evidence.py --statistics-summary outputs\statistics\summary_eegnet_raw_all.json --behavioral-ablation-summary outputs\controls\behavioral_ablation_summary.json --bandpower-summary outputs\mechanism\mtl_bandpower_summary_eegnet_raw_all.json --residual-summary outputs\mechanism\mtl_residual_coupling_summary_eegnet_raw_all.json --out-dir outputs\amendment
+.\venv\Scripts\python.exe scripts\run_mtl_confirmatory_coupling_gate.py --residual-summary outputs\mechanism\mtl_residual_coupling_summary_eegnet_raw_all.json --subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir outputs\mechanism
 ```
 
-Ignored outputs:
+Gate criteria:
 
-- `outputs/amendment/phase2_amendment_evidence_eegnet_raw_all.json`
-- `outputs/amendment/phase2_amendment_evidence_eegnet_raw_all.md`
+- fixed metric: `corr_schedule_residual_score_mtl_theta_alpha_diff`;
+- mean correlation must be positive;
+- at least `7/9` subjects positive;
+- exact two-sided subject sign-flip `p <= 0.05`;
+- every leave-one-subject-out mean must be above `0`.
 
-This packet compiles the fixed EEGNet statistics, behavioral-control source, MTL substrate, and residual-coupling rows into one auditable artifact for the amendment discussion. It should help deliverable drafting without overstating the mechanism result. Cite the script in tracked docs; the generated `outputs/` packet is intentionally ignored and reproducible.
+Result:
 
-## Amendment 1 Review Position
+```text
+gate_passed = False
+schedule-residualized mean = 0.011
+positive subjects = 4/9
+p2 = 0.7461
+min leave-one-subject-out mean = -0.010
+```
 
-Codex Session 10 approved Amendment 1 with this evidence line:
+Interpretation: Part B remains exploratory/inconclusive. Do not describe the raw coupling as validated deep-source-related information.
 
-- The Slot 11 decoding success bar is not weakened.
-- Part A is a bounded negative across the completed common-montage LOSO model ladder.
-- Part B is exploratory/inconclusive, not validated deep-source readout.
-- Any future mechanism-success bar must include residualization/robustness requirements or be explicitly prospective. Do not launder the already-inspected raw p2=`0.0508` into a confirmed headline by simply naming it confirmatory after the fact.
+## Session 11 Deliverable Updates
 
-Claude wrote the amendment-trigger progress report in:
+Codex Session 11 changed:
 
-- `agents/Claude/Progress Reports/Progress Report Amendment 1 Decoding-to-Coupling Repoint.md`
+- `scripts/run_mtl_confirmatory_coupling_gate.py` - new confirmatory gate script.
+- `scripts/render_verification_dashboard.py` - now accepts optional `--mechanism-gate` JSON and `--mechanism-subject-summary` CSV so the dashboard can show Part B gate status and per-subject schedule-residualized coupling values.
+- `deliverables/technical_report/main.tex` - Section 5.2 now records the failed confirmatory gate.
+- `deliverables/technical_report/README.md` - `[P2]` marked completed; `[P1]` and `[P3]` remain open.
+- `agents/Codex/README.md` - refreshed for concluded chat state, Session 11, and new script ownership.
+- `agents/Codex/Session Summaries/HumanReport11.md` - Session 11 report.
+- `agents/Codex/Summary of Only Necessary Context.md` - this file.
 
-## Active Chat State
+Generated outputs remain intentionally ignored by git:
 
-Active thread:
+- `outputs/mechanism/mtl_confirmatory_coupling_gate_eegnet_raw_all.json`
+- `outputs/mechanism/mtl_confirmatory_coupling_gate_eegnet_raw_all.md`
+- `outputs/dashboard/verification_dashboard_eegnet_raw_all.html`
 
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`
+Final EEGNet dashboard render command:
 
-Important latest state:
+```text
+.\venv\Scripts\python.exe scripts\render_verification_dashboard.py --predictions outputs\controls\control_predictions_eegnet_raw_all.csv --subject-statistics outputs\statistics\subject_statistics_eegnet_raw_all.csv --summary outputs\statistics\summary_eegnet_raw_all.json --mechanism-gate outputs\mechanism\mtl_confirmatory_coupling_gate_eegnet_raw_all.json --mechanism-subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir outputs\dashboard
+```
 
-- Claude Session 8 proposed a Claim Sheet amendment after EEGNet.
-- Codex Session 9 agreed the decoding half is done and agreed an amendment is warranted, but pushed back on mechanism wording because the raw coupling result is suggestive/inconclusive, not validated.
-- Codex Session 10 added the amendment-evidence summarizer note and command.
-- Claude Session 8 drafted Amendment 1 into both Claim Sheets, adopted Codex's narrower mechanism language, reported brain-only EEGNet BA `0.623`, and wrote the amendment-trigger progress report.
-- Codex Session 10 reviewed and approved the final Amendment 1 wording.
-- The chat remains active because `.claude-session.lock` was still present at Session 10 closeout. The objective is otherwise ready to conclude and summarize.
+## Verification State
 
-Concluded human-including thread:
+Python verification passed:
 
-- `chats/Claude-Codex-Human/Some Updates/Some Updates - Concluded.md`
-- `chats/Claude-Codex-Human/Some Updates/Summary.md`
+```text
+.\venv\Scripts\python.exe -m py_compile scripts\run_mtl_confirmatory_coupling_gate.py scripts\render_verification_dashboard.py
+```
 
-That thread records Randy's Claim Sheet approval, disk-space update, and git protocol.
+LaTeX verification did not reach the report source. `pdflatex -interaction=nonstopmode main.tex` from `deliverables/technical_report/` failed because MiKTeX could not rebuild the `pdflatex` format: `formats.ini` was missing and MiKTeX reported a local lock-path permission failure. Treat this as a local TeX installation issue to fix before report-final verification.
 
-## Available Local Artifacts
+## Git Closeout State
 
-Generated outputs remain intentionally ignored by git under `/outputs/`, but the local workspace has:
-
-- feature bundle and metadata under `outputs/features/`;
-- completed decoding outputs for logistic/LDA/Riemannian rungs under `outputs/decoding/`;
-- completed EEGNet headline outputs under `outputs/decoding/predictions_eegnet_raw_all.csv`, `subject_scores_eegnet_raw_all.csv`, and `summary_eegnet_raw_all.json`;
-- brain-only EEGNet diagnostic outputs under `outputs/decoding/predictions_eegnet_raw_brain.csv` and `subject_scores_eegnet_raw_brain.csv`;
-- EEGNet controls under `outputs/controls/control_*_eegnet_raw_all.csv`;
-- EEGNet subject statistics under `outputs/statistics/summary_eegnet_raw_all.*` and `subject_statistics_eegnet_raw_all.csv`;
-- MTL band-power summaries for tangent and EEGNet under `outputs/mechanism/mtl_bandpower_*`;
-- residual coupling summaries for EEGNet under `outputs/mechanism/mtl_residual_coupling_*_eegnet_raw_all.*`;
-- amendment evidence packet under `outputs/amendment/phase2_amendment_evidence_eegnet_raw_all.*`.
-
-## Git And Concurrent Work State
-
-At Session 10 start, dirty files included Claude-owned edits, Codex Session 9 edits, shared chat edits, and untracked Session 9 files. Do not revert Claude's changes.
-
-Claude-owned/concurrent files observed:
-
-- `agents/Claude/README.md`
-- `agents/Claude/Summary of Only Necessary Context.md`
-- `agents/Claude/references.md`
-- `agents/Claude/Progress Reports/Progress Report Session 8.md`
-- `agents/Claude/Session Summaries/HumanReport8.md`
-- `director_requests.md`
-- `Claim Sheet.md`
-- `Accessible Claim Sheet.md`
-- `agents/Claude/Progress Reports/Progress Report Amendment 1 Decoding-to-Coupling Repoint.md`
-
-Codex-owned or Codex-touched files from Sessions 9-10 include:
-
-- `agents/Codex/README.md`
-- `agents/Codex/Summary of Only Necessary Context.md`
-- `agents/Codex/Session Summaries/HumanReport9.md`
-- `agents/Codex/Session Summaries/HumanReport10.md`
-- `scripts/run_mtl_residual_coupling_probe.py`
-- `scripts/summarize_phase2_amendment_evidence.py`
-- `chats/Claude-Codex/Riemannian Ladder Verdict/Riemannian Ladder Verdict - Active.md`
-- `chats/Claude-Codex-Human/Some Updates/Some Updates - Concluded.md`
-- `chats/Claude-Codex-Human/Some Updates/Summary.md`
-
-Codex Sessions 9 and 10 could not stage because git failed with:
+Codex Session 11 attempted the required stage/commit/push after all closeout files were written. The attempt failed before staging because Git could not create `.git/index.lock`:
 
 ```text
 fatal: Unable to create '.../.git/index.lock': Permission denied
 ```
 
-`Test-Path .git\index.lock` returned `False`, so it was not a stale lock file. Session 10 attempted a narrow `git add` for completed Codex files and hit the same error before staging anything. No Codex commit or push was possible. Claude's Session 8 commit is already on `origin/main` and includes the Claim Sheet amendment and active chat; the pending Codex files remain in the working tree for a future Claude/Randy push or a Codex session with working git metadata writes.
+`Test-Path .git\index.lock` returned `False`, so this was not a stale lock file. The push step also failed because GitHub was unreachable from the sandbox. No Session 11 commit exists from Codex. The uncommitted Session 11 files are:
+
+- `agents/Codex/README.md`
+- `agents/Codex/Summary of Only Necessary Context.md`
+- `agents/Codex/Session Summaries/HumanReport11.md`
+- `deliverables/technical_report/README.md`
+- `deliverables/technical_report/main.tex`
+- `scripts/render_verification_dashboard.py`
+- `scripts/run_mtl_confirmatory_coupling_gate.py`
 
 ## Hard Guards To Preserve
 
@@ -224,19 +185,19 @@ fatal: Unable to create '.../.git/index.lock': Permission denied
 - Timing-only control must not include response time, correctness, match/mismatch, neural features, or target encodings.
 - A1/A2 are ear/mastoid references; brain-only diagnostics are required but cannot move the headline bar after results are observed.
 - Mechanism full-claim support requires adequate MTL coverage and actual coupling evidence, not coverage alone.
-- The MTL band-power, residual-coupling, and amendment-evidence scripts are mechanism/amendment scaffolds, not full mechanism success results.
+- Raw EEGNet-to-MTL coupling `p2=0.0508` is exploratory because the residualized confirmatory gate failed.
 - No raw dataset files, large binaries, generated outputs, scratch probes, local lock files, or local venv files should be committed.
 
 ## Next Actions
 
 For Codex:
 
-1. If the amendment wording changes, review it against the narrowed evidence language above.
-2. Use `scripts/summarize_phase2_amendment_evidence.py` as the compact evidence packet generator for amendment/deliverable review.
-3. Keep `scripts/run_mtl_residual_coupling_probe.py` as the current Codex-owned mechanism sensitivity analysis.
-4. If the prospective confirmatory coupling test runs, bake in the residualization/robustness criterion from Amendment 1.
-5. Treat the brain-only EEGNet diagnostic as an artifact/reference check only; it cannot alter the headline failure.
-6. If git metadata writes work, carefully stage/commit Codex-owned completed files while preserving Claude's concurrent work. Pending completed Codex files are listed in the Git section above.
+1. Keep Part B as exploratory/inconclusive in all deliverables unless a future, separately powered dataset changes the evidence.
+2. If dashboard figures are created for the Technical Report, use the final EEGNet dashboard flow with the mechanism-gate inputs, not the older logistic-only dashboard.
+3. Help close Technical Report `[P1]` by producing 300 DPI dashboard figures or a figure-ready export from the dashboard if needed.
+4. Help close Technical Report `[P3]` by reconciling Codex and Claude `references.md` into `deliverables/technical_report/references.bib`.
+5. Fix or work around the local MiKTeX configuration before relying on LaTeX compile checks.
+6. Commit/push Session 11 files from an environment that can write `.git/index.lock` and reach GitHub, or allow Claude/Randy to include them in a later combined commit.
 
 ## Local Substrate Facts
 

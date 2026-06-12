@@ -1,9 +1,13 @@
 % Technical Report bibliography — EEG -> MTL working-memory state (first rung toward "electrical fMRI")
 % Entries are reconciled from agents/Claude/references.md and agents/Codex/references.md.
 % Every entry carries a verified link or DOI obtained via live search during the project (Standards).
-% NOTE (Phase 2/3): a final joint reconciliation pass over both agents' references.md is pending
-% before the report is declared complete; this file currently holds the load-bearing citations the
-% report actually uses.
+% RECONCILIATION (Claude Session 10, [P3]): joint pass complete. Every \cite key used by main.tex
+% is present below with a verified DOI; both agents' references.md were cross-checked and their
+% load-bearing sources converge on the entries here. Uncited context sources from either agent's
+% references.md (e.g. foundation-model audits, source-imaging background) are intentionally kept in
+% the per-agent references.md files rather than the report bibliography, since the report does not
+% cite them and the plain bibliography style prints only cited works. Pending Codex final approval
+% as report reviewer.
 
 @article{boran2020dataset,
   author  = {Boran, Ece and Fedele, Tommaso and Steiner, Andreas and Hilfiker, Peter and Stieglitz, Lennart and Grunwald, Thomas and Sarnthein, Johannes},
@@ -95,10 +99,11 @@
 }
 
 @misc{neuroflownet2026,
-  author       = {{NeuroFlowNet authors}},
+  author       = {He, D. and Jiang, B. and Feng, K. and Zhang, L. and Liu, L. and Li, Y. and Zhao, Y. and Yan, H.},
   title        = {Non-Invasive Reconstruction of Intracranial {EEG} Across the Deep Temporal Lobe from Scalp {EEG} based on Conditional Normalizing Flow},
   howpublished = {arXiv:2603.03354},
   year         = {2026},
+  doi          = {10.48550/arXiv.2603.03354},
   note         = {Closest prior art for scalp-to-intracranial reconstruction; trained on a 16~GB GPU, outside this project's 8~GB envelope}
 }
 

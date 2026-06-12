@@ -2,8 +2,9 @@
 
 The dashboard is intentionally data-driven: it consumes the prediction table emitted by
 ``run_control_models.py`` and the subject statistics emitted by
-``summarize_subject_statistics.py``. At this stage the mechanism layer has not been run,
-so the verdicts are decoding-only and explicitly marked as mechanism pending.
+``summarize_subject_statistics.py``. When supplied, it also consumes the Part B
+confirmatory mechanism gate emitted by ``run_mtl_confirmatory_coupling_gate.py`` and
+the residual-coupling subject table.
 
 Usage:
     .\\venv\\Scripts\\python.exe scripts\\render_verification_dashboard.py \\
@@ -24,6 +25,9 @@ from pathlib import Path
 import pandas as pd
 
 
+CONFIRMATORY_METRIC = "corr_schedule_residual_score_mtl_theta_alpha_diff"
+
+
 def _derive_tag(path: str) -> str:
     """Derive the run tag from a control_predictions_<tag>.csv filename."""
     name = Path(path).stem
@@ -34,6 +38,15 @@ def _derive_tag(path: str) -> str:
 def _fmt(value: float) -> str:
     """Format a floating metric for the dashboard."""
     return f"{float(value):.3f}"
+
+
+def _load_json(path: str) -> dict:
+    """Load a JSON object from ``path``."""
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected JSON object in {path}.")
+    return data
 
 
 def _trial_strip(rows: pd.DataFrame) -> str:
@@ -56,15 +69,48 @@ def _trial_strip(rows: pd.DataFrame) -> str:
     return "\n".join(cells)
 
 
-def _subject_section(subject_id: str, pred: pd.DataFrame, stats_row: pd.Series) -> str:
+def _mechanism_text(
+    mechanism_gate: dict | None,
+    mechanism_row: pd.Series | None,
+) -> str:
+    """Render the project-level and subject-level mechanism gate status."""
+    if mechanism_gate is None:
+        return "Mechanism layer: not supplied for this dashboard render."
+
+    gate = mechanism_gate["confirmatory_gate"]
+    observed = gate["observed"]
+    status = "passed" if gate["gate_passed"] else "not met"
+    text = (
+        "Mechanism layer: Part B confirmatory gate "
+        f"{status} at project level "
+        f"(schedule-residualized mean={_fmt(observed['mean'])}, "
+        f"{observed['n_positive']}/{observed['n_subjects']} positive, "
+        f"p2={float(observed['sign_flip_p_two_sided']):.4f})."
+    )
+    if mechanism_row is not None and CONFIRMATORY_METRIC in mechanism_row:
+        text += (
+            " This subject's schedule-residualized score-MTL theta-alpha "
+            f"correlation is {_fmt(mechanism_row[CONFIRMATORY_METRIC])}."
+        )
+    return text
+
+
+def _subject_section(
+    subject_id: str,
+    pred: pd.DataFrame,
+    stats_row: pd.Series,
+    mechanism_gate: dict | None,
+    mechanism_row: pd.Series | None,
+) -> str:
     """Render one subject's decoding/control panel."""
     rows = pred[pred["subject_id"] == subject_id].sort_values(["session_id", "trial_id"])
     verdict = "weaken" if float(stats_row["improvement"]) > 0.0 else "contradict"
     verdict_text = (
-        "beats strongest control; mechanism pending"
+        "beats strongest control; mechanism gate not met"
         if verdict == "weaken"
         else "does not beat strongest control"
     )
+    mechanism_text = _mechanism_text(mechanism_gate, mechanism_row)
     table_rows = []
     for row in rows.head(12).itertuples(index=False):
         table_rows.append(
@@ -100,7 +146,7 @@ def _subject_section(subject_id: str, pred: pd.DataFrame, stats_row: pd.Series) 
           {''.join(table_rows)}
         </tbody>
       </table>
-      <p class="mechanism">Mechanism layer: not run yet for this dashboard render.</p>
+      <p class="mechanism">{html.escape(mechanism_text)}</p>
     </section>
     """
 
@@ -112,14 +158,28 @@ def main() -> None:
     ap.add_argument("--summary", required=True, help="summary_<tag>.json.")
     ap.add_argument("--out-dir", default="outputs/dashboard", help="Output directory.")
     ap.add_argument("--tag", default=None, help="Optional output tag.")
+    ap.add_argument("--mechanism-gate", default=None, help="Optional MTL confirmatory gate JSON.")
+    ap.add_argument(
+        "--mechanism-subject-summary",
+        default=None,
+        help="Optional residual-coupling subject CSV for per-subject mechanism values.",
+    )
     args = ap.parse_args()
 
     os.makedirs(args.out_dir, exist_ok=True)
     tag = args.tag or _derive_tag(args.predictions)
     pred = pd.read_csv(args.predictions)
     stats = pd.read_csv(args.subject_statistics).sort_values("subject_id")
-    with open(args.summary, encoding="utf-8") as fh:
-        summary = json.load(fh)
+    summary = _load_json(args.summary)
+    mechanism_gate = _load_json(args.mechanism_gate) if args.mechanism_gate else None
+    mechanism_rows = {}
+    if args.mechanism_subject_summary:
+        mechanism_subject = pd.read_csv(args.mechanism_subject_summary)
+        required_mechanism = {"subject_id", CONFIRMATORY_METRIC}
+        missing_mechanism = sorted(required_mechanism - set(mechanism_subject.columns))
+        if missing_mechanism:
+            raise ValueError(f"Mechanism subject summary missing columns: {missing_mechanism}")
+        mechanism_rows = {row["subject_id"]: row for _, row in mechanism_subject.iterrows()}
 
     required_pred = {
         "subject_id",
@@ -137,7 +197,13 @@ def main() -> None:
 
     stats_rows = {row["subject_id"]: row for _, row in stats.iterrows()}
     sections = [
-        _subject_section(subject_id, pred, stats_rows[subject_id])
+        _subject_section(
+            subject_id,
+            pred,
+            stats_rows[subject_id],
+            mechanism_gate,
+            mechanism_rows.get(subject_id),
+        )
         for subject_id in stats["subject_id"].tolist()
     ]
     summary_rows = []
@@ -153,6 +219,13 @@ def main() -> None:
         )
 
     success_text = "met" if summary["headline_success"] else "not met"
+    mechanism_gate_card = ""
+    if mechanism_gate is not None:
+        gate = mechanism_gate["confirmatory_gate"]
+        gate_text = "met" if gate["gate_passed"] else "not met"
+        mechanism_gate_card = (
+            f"<div><span>Part B Gate</span><strong>{html.escape(gate_text)}</strong></div>"
+        )
     html_doc = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -286,6 +359,7 @@ def main() -> None:
       <div><span>Mean Improvement</span><strong>{_fmt(summary['mean_improvement'])}</strong></div>
       <div><span>Subjects Above Control</span><strong>{summary['subjects_above_strongest_control']}/{summary['n_subjects']}</strong></div>
       <div><span>Min Leave-One-Out Mean</span><strong>{_fmt(summary['min_leave_one_out_mean_improvement'])}</strong></div>
+      {mechanism_gate_card}
     </section>
     <table>
       <thead>

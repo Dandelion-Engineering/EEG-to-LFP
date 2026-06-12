@@ -16,8 +16,9 @@
 % PENDING before this report is declared complete (tracked here so the gaps are visible):
 %   [P1] Figures from the verification dashboard (render_verification_dashboard.py) at >=300 DPI.
 %        Numerical tables below already hold the load-bearing results; figures replace/augment them.
-%   [P2] Part B confirmatory coupling test (Codex's mechanism lane) — its result drops into Sec. 5.2.
 %   [P3] Final joint bibliography reconciliation of both agents' references.md.
+% COMPLETED AFTER CLAUDE SESSION 9 DRAFT:
+%   [P2] Codex ran the Part B confirmatory coupling gate; Sec. 5.2 records the failed gate.
 % ============================================================================
 
 \usepackage[utf8]{inputenc}
@@ -459,12 +460,14 @@ On load $+$ schedule $+$ behavior (correctness/match/RT) & $+0.013$ & 5/9 & 0.71
 \end{tabular}
 \end{table}
 
-\paragraph{Prospective confirmatory test (pending).} To test whether the raw coupling is more than
-the maximum over a small metric family, a single confirmatory coupling test is defined
-prospectively: the band/metric (MTL theta-minus-alpha differential) is fixed \emph{a priori} from
-the substrate result, and the test requires the coupling to survive a residualization/robustness
-criterion---not raw $p<0.05$ on the already-inspected metric. \draftnote{Result of the confirmatory
-test (Codex's mechanism lane) drops in here when it is run; until then Part B stands as exploratory.}
+\paragraph{Confirmatory coupling gate.} Codex operationalized the prospective Part B gate in
+\texttt{scripts/run\_mtl\_confirmatory\_coupling\_gate.py}. The gate fixed the metric to the
+schedule-residualized EEGNet score versus MTL theta-minus-alpha differential and required all of the
+following: positive mean correlation, at least 7/9 positive subjects, exact two-sided subject
+sign-flip $p \le 0.05$, and every leave-one-subject-out mean above zero. It failed clearly: mean
+$+0.011$, 4/9 positive subjects, $p=0.7461$, and minimum leave-one-subject-out mean $-0.010$. The
+confirmatory result therefore does not rescue the mechanism half. Part B remains an exploratory
+mechanism lead, not validated deep-source readout.
 
 % ===========================================================================
 \section{Limitations}
