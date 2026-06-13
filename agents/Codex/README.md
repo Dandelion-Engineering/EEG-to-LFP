@@ -24,7 +24,8 @@ agents/Codex/
     |-- HumanReport9.md
     |-- HumanReport10.md
     |-- HumanReport11.md
-    `-- HumanReport12.md
+    |-- HumanReport12.md
+    `-- HumanReport13.md
 ```
 
 ## Authoritative files
@@ -34,7 +35,7 @@ agents/Codex/
 - `Phase 2 Controls and Statistics Spec.md`: Codex's Phase 2 interface specification for controls, statistics, trial-count audit expectations, leakage guards, and verification-dashboard inputs.
 - `references.md`: Codex's running bibliography with notes on how each source shaped the project.
 - `Summary of Only Necessary Context.md`: The restart document. It is rewritten at the end of each Codex session and should be read after `Project Details/` at the start of the next session.
-- `Session Summaries/`: Human-readable reports for each Codex session.
+- `Session Summaries/`: Human-readable reports for each Codex session, now through Session 13.
 - `README.md`: This navigation file.
 
 ## Temporary or periodic files
@@ -46,10 +47,11 @@ agents/Codex/
 - `Claim Sheet.md`: Technical Claim Sheet with Amendment 1 ratified on 2026-06-12. The original decoding success bar remains unmet; the current result is a bounded negative plus exploratory mechanism lead.
 - `Accessible Claim Sheet.md`: Plain-language companion to the technical Claim Sheet, synced through Amendment 1.
 - `director_requests.md`: Director-facing request log. Requests 1 and 2 are resolved as of 2026-06-12: Randy approved the Claim Sheet pair and freed disk space for the EEGNet rung.
-- `deliverables/technical_report/main.tex`: Claude's draft Technical Report. Codex Session 11 inserted the failed Part B confirmatory gate result into Section 5.2; Codex Session 12 inserted 300-DPI dashboard-derived figures.
-- `deliverables/technical_report/README.md`: Build notes. Report-side `[P1]` dashboard figures and `[P3]` bibliography reconciliation are complete as of Codex Session 12.
+- `deliverables/technical_report/main.tex`: Claude's Technical Report source. Codex Session 11 inserted the failed Part B confirmatory gate result into Section 5.2; Codex Session 12 inserted 300-DPI dashboard-derived figures; Codex Session 13 marked the source approved.
+- `deliverables/technical_report/README.md`: Build notes. Report-side `[P1]`, `[P2]`, and `[P3]` are complete and the source is approved; local PDF compilation remains blocked by MiKTeX configuration.
 - `deliverables/technical_report/figures/`: Tracked 300-DPI PNG figures exported from the final EEGNet dashboard inputs for the Technical Report.
 - `deliverables/accessible_piece/Accessible Piece.md`: Claude's plain-language companion deliverable. Codex Session 12 approved it after one precision edit to the Part A model-ladder wording.
+- `deliverables/reproducibility_packet/`: Reproducibility Packet built by Claude and reviewed by Codex Session 13. Structure/content are approved, including repository-root code reuse; final packet approval waits on the clean-output EEGNet validation decision/run.
 - `chats/Claude-Codex/Phase 0 Literature Alignment/Phase 0 Literature Alignment - Concluded.md`: Concluded Phase 0 alignment transcript.
 - `chats/Claude-Codex/Phase 0 Literature Alignment/Summary.md`: Summary of the concluded Phase 0 alignment.
 - `chats/Claude-Codex/Claim Sheet Phase 1/Claim Sheet Phase 1 - Concluded.md`: Concluded Phase 1 review transcript where Codex approved the technical Claim Sheet.
@@ -59,6 +61,7 @@ agents/Codex/
 - `chats/Claude-Codex/Riemannian Ladder Verdict/Summary.md`: Summary of the concluded Amendment 1 thread.
 - `chats/Claude-Codex/Accessible Piece Review/Accessible Piece Review - Concluded.md`: Concluded thread where Codex approved the Accessible Piece, approved `[P3]`, and closed `[P1]` with report figures.
 - `chats/Claude-Codex/Accessible Piece Review/Summary.md`: Summary of the concluded Accessible Piece/report-figure review.
+- `chats/Claude-Codex/Reproducibility Packet Review/Reproducibility Packet Review - Active.md`: Active thread where Claude requested packet review and Codex approved the report source while leaving the packet validation gate open.
 - `chats/Claude-Codex-Human/Some Updates/Some Updates - Concluded.md`: Concluded thread where Randy approved the Claim Sheet, reported disk space was freed, and clarified the Codex/Claude git protocol.
 - `chats/Claude-Codex-Human/Some Updates/Summary.md`: Summary of the concluded Randy/Claude/Codex update thread.
 - `scripts/run_control_models.py`: Codex-owned control harness for label-shuffle, behavioral-only, timing-only, and subject-identity diagnostics.
@@ -78,4 +81,4 @@ agents/Codex/
 
 ## How to navigate
 
-Start with `Project Details/Project Details.md`, then read `Summary of Only Necessary Context.md`, then check any active chats involving Codex. At this closeout there are no active Codex chats. For Codex's controls/statistics/dashboard lane, read `Phase 2 Controls and Statistics Spec.md` before modifying any control/statistics harness code. For source context, use `Literature Foundation.md` and `references.md`.
+Start with `Project Details/Project Details.md`, then read `Summary of Only Necessary Context.md`, then check active chats involving Codex. At this closeout the active Codex chat is `chats/Claude-Codex/Reproducibility Packet Review/Reproducibility Packet Review - Active.md`. For Codex's controls/statistics/dashboard lane, read `Phase 2 Controls and Statistics Spec.md` before modifying any control/statistics harness code. For source context, use `Literature Foundation.md` and `references.md`.

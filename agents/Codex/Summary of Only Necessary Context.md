@@ -1,9 +1,9 @@
 # Summary of Only Necessary Context - Codex
 
-**Last rewritten:** 2026-06-12 12:09 PDT (Codex Session 12)
-**Current phase:** Phase 3 deliverable support after Amendment 1; Phase 2 evidence is concludable
+**Last rewritten:** 2026-06-12 14:45 PDT (Codex Session 13)
+**Current phase:** Phase 3 deliverable support after Amendment 1; Technical Report source approved; Reproducibility Packet validation gate still open
 
-Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the dataset paper in `Project Details/`, the Claim Sheet pair, and Codex-related chat summaries at the start of the next session. This file records Codex-specific continuity not already contained there.
+Re-read `AgentPrompt.md`, `Project Details/Project Details.md`, the dataset paper in `Project Details/`, the Claim Sheet pair, and Codex-related chat summaries/active chats at the start of the next session. This file records Codex-specific continuity not already contained there.
 
 ## Current Project State
 
@@ -11,16 +11,15 @@ Phase 0 and Phase 1 are closed. Randy approved the original Claim Sheet pair in 
 
 Amendment 1 is ratified in both `Claim Sheet.md` and `Accessible Claim Sheet.md`. It records the completed model ladder as a bounded negative and the EEGNet-to-MTL coupling as an exploratory/inconclusive mechanism lead. The original Slot 11 decoding success bar was not weakened.
 
-All Codex-including chats are concluded at this closeout. The newest concluded chat is:
+The active Codex-including chat at closeout is:
 
-- `chats/Claude-Codex/Accessible Piece Review/Accessible Piece Review - Concluded.md`
-- `chats/Claude-Codex/Accessible Piece Review/Summary.md`
+- `chats/Claude-Codex/Reproducibility Packet Review/Reproducibility Packet Review - Active.md`
 
-Claude drafted the Technical Report under `deliverables/technical_report/`. Codex Session 11 inserted the failed Part B confirmatory coupling gate result into Section 5.2. Codex Session 12 approved the bibliography reconciliation `[P3]`, added dashboard-derived 300-DPI figures for `[P1]`, inserted them into `main.tex`, and approved the Accessible Piece after one precision edit. The report README now lists no report-local open items; the broader Phase 3 blocker is the Reproducibility Packet.
+Do not conclude it until the Reproducibility Packet validation/approval gate is resolved.
 
 ## Locked Original Headline Configuration
 
-The original locked Phase 2 headline configuration remains important because it defines the clean negative result:
+The original locked Phase 2 headline configuration defines the clean negative result:
 
 - primary target: binary high-vs-low load, set size 4 vs set sizes 6/8;
 - headline epoch: maintenance period `[-3, 0]` seconds relative to probe;
@@ -30,7 +29,7 @@ The original locked Phase 2 headline configuration remains important because it 
 - success bar: mean LOSO balanced-accuracy improvement over strongest non-signal control at least `+0.075`, at least `7/9` held-out subjects above control, and no leave-one-subject-removed mean below `0.04`;
 - evidence is subject-level; window-level permutation cannot substitute.
 
-Do not run additional headline decoders to rescue this original bar. Frequency-domain CNNs, richer channel sets, or within-subject runs would be diagnostics/new claims, not a rescue of the locked common-montage LOSO headline.
+Do not run additional headline decoders to rescue this bar. Frequency-domain CNNs, richer channel sets, or within-subject runs would be diagnostics/new claims, not a rescue of the locked common-montage LOSO headline.
 
 ## Completed Decoding Results
 
@@ -74,14 +73,7 @@ This is not response-time leakage, correctness/match leakage, or session/trial-o
 
 MTL coverage is adequate for all `9/9` subjects. Coverage alone does not support the deep-readout claim.
 
-The MTL band-power probe against `tangent_cov_all` found a real-looking intracranial substrate but no coupling to tangent scores:
-
-```text
-MTL theta-alpha load effect z: mean 0.143, 7/9 positive, p2=0.0156
-corr(tangent score, theta-alpha): mean -0.015, 5/9 positive, p2=0.8086
-```
-
-The MTL band-power probe against EEGNet scores found the same substrate and a suggestive raw coupling:
+The MTL band-power probe against EEGNet scores found a real MTL theta-alpha substrate and a suggestive raw coupling:
 
 ```text
 MTL theta-alpha load effect z: mean 0.143, 7/9 positive, p2=0.0156
@@ -119,61 +111,82 @@ min leave-one-subject-out mean = -0.010
 
 Interpretation: Part B remains exploratory/inconclusive. Do not describe the raw coupling as validated deep-source-related information.
 
-## Session 12 Deliverable Updates
+## Deliverable State After Session 13
 
-Codex Session 12 changed:
+Accessible Piece: approved by Codex Session 12 after one precision edit.
 
-- `deliverables/accessible_piece/Accessible Piece.md` - approved with one precision edit: simpler models fell short of the strong shortcut; EEGNet was the only rung above strongest control on the mean.
-- `scripts/export_dashboard_report_figures.py` - new Codex-owned exporter from final dashboard inputs to tracked 300-DPI report PNGs.
-- `deliverables/technical_report/figures/eegnet_raw_all_subject_improvements.png` - per-subject EEGNet improvement figure showing S04 dependence and unmet +0.075 bar.
-- `deliverables/technical_report/figures/eegnet_raw_all_mtl_coupling_residualization.png` - mechanism sensitivity figure showing raw-to-residualized coupling collapse and failed confirmatory gate.
-- `deliverables/technical_report/main.tex` - inserted both figures and updated report status comments.
-- `deliverables/technical_report/README.md` - marks report-side `[P1]` and `[P3]` complete; no report-local open items remain.
-- `deliverables/technical_report/references.bib` - header records Codex approval of bibliography reconciliation.
-- `chats/Claude-Codex/Accessible Piece Review/Accessible Piece Review - Concluded.md` and `Summary.md` - chat concluded after approval/handoff.
-- `agents/Codex/README.md` - refreshed for Session 12, new exporter, approved Accessible Piece, and concluded chat state.
-- `agents/Codex/Session Summaries/HumanReport12.md` - Session 12 report.
+Technical Report: source approved by Codex Session 13. `deliverables/technical_report/main.tex` and `README.md` now say source approved. Report source checks passed: no missing citation keys, no missing figure paths, and relevant report/dashboard scripts compile. Local PDF verification remains blocked by MiKTeX before source processing: `pdflatex` cannot rebuild `pdflatex.fmt` because `formats.ini` is missing and the local MiKTeX lock path has a permission failure.
+
+Reproducibility Packet: built by Claude under `deliverables/reproducibility_packet/`. Codex Session 13 approved the packet structure/content direction, including the decision not to duplicate `scripts/` and `utils/` into the packet. The repository is the reproduction unit.
+
+Final packet approval is still open. Codex verified:
+
+- all packet-listed scripts expose valid CLI help under the pinned venv;
+- installed venv dependency versions match packet/root `requirements.txt`;
+- the shipped dashboard has no external URL/fetch dependencies;
+- dataset-free packet checks pass and regenerate a byte-identical dashboard;
+- a clean-output scratch validation passed through reader validation, trial metadata, montage audit, feature build, LOSO split generation, logistic, tangent, and MDM runs.
+
+The clean-output default EEGNet run exceeded a one-hour foreground timeout before producing `predictions_eegnet_raw_all.csv`. Existing `outputs/` still support the packet and dashboard, but the strict packet gate needs either:
+
+1. one uninterrupted default EEGNet run in a clean output tree, followed by downstream controls/statistics/mechanism/dashboard from that tree; or
+2. an explicit written decision that the prior validated `outputs/` EEGNet artifacts are accepted as the canonical expensive-stage cache.
+
+Phase 3 should not be closed until that Reproducibility Packet validation decision/run is recorded.
+
+## Validation State
+
+Session 13 checks that passed:
+
+```text
+all packet-listed scripts --help under .\venv\Scripts\python.exe
+dependency version check against packet/root requirements
+dashboard external-fetch search
+dashboard byte-identical regeneration from current outputs
+technical report citation-key and figure-path checks
+.\venv\Scripts\python.exe -m py_compile scripts\render_verification_dashboard.py scripts\export_dashboard_report_figures.py scripts\run_eegnet_decoder.py scripts\run_mtl_confirmatory_coupling_gate.py
+clean-output validation through feature build, LOSO folds, logistic, tangent, and MDM
+```
+
+Known blockers/gaps:
+
+- Clean-output default EEGNet run timed out after one hour; no clean-output EEGNet files were produced.
+- MiKTeX PDF compilation remains broken before report source processing.
+
+## Files Changed In Session 13
+
+- `.gitignore` - added `/outputs_cleanroom/` for generated clean-output artifacts.
+- `deliverables/technical_report/main.tex` - marked source approved; removed draft macro; fixed approved date.
+- `deliverables/technical_report/README.md` - marked source approved and documented the MiKTeX compile blocker.
+- `chats/Claude-Codex/Reproducibility Packet Review/Reproducibility Packet Review - Active.md` - appended Codex's packet/report review.
+- `agents/Codex/README.md` - refreshed navigation and active-chat state.
+- `agents/Codex/Session Summaries/HumanReport13.md` - Session 13 report.
 - `agents/Codex/Summary of Only Necessary Context.md` - this file.
 
-Final report-figure export command:
+Generated/ignored artifacts from validation:
 
-```text
-.\venv\Scripts\python.exe scripts\export_dashboard_report_figures.py --subject-statistics outputs\statistics\subject_statistics_eegnet_raw_all.csv --summary outputs\statistics\summary_eegnet_raw_all.json --mechanism-gate outputs\mechanism\mtl_confirmatory_coupling_gate_eegnet_raw_all.json --mechanism-subject-summary outputs\mechanism\mtl_residual_coupling_subject_summary_eegnet_raw_all.csv --out-dir deliverables\technical_report\figures --dpi 300
-```
-
-## Verification State
-
-Python verification passed:
-
-```text
-.\venv\Scripts\python.exe -m py_compile scripts\export_dashboard_report_figures.py scripts\render_verification_dashboard.py
-```
-
-A direct citation/figure-path check passed: no missing `\cite{}` keys and no missing `\includegraphics{}` paths.
-
-Local image inspection found both new PNGs readable and correctly framed.
-
-LaTeX verification is still blocked before the report source is read. `pdflatex -interaction=nonstopmode main.tex` from `deliverables/technical_report/` fails because MiKTeX cannot rebuild `pdflatex.fmt`: `formats.ini` is missing and MiKTeX reports a local lock-path permission failure. Treat this as a local TeX installation issue to fix before final PDF verification.
+- `scratch/repro_validation_20260612_133941/` - ignored clean-output validation tree.
+- `outputs_cleanroom/` - pre-existing/generated output directory now ignored by root `.gitignore`.
+- `outputs/` - current canonical ignored outputs were touched by the cheap packet regeneration commands.
 
 ## Git Closeout State
 
-Codex Session 12 attempted the required stage/commit/push after all closeout files were written. The attempt failed before staging because Git could not create `.git/index.lock`:
+Codex Session 13 attempted the required stage/commit/push after all closeout files were written. The attempt failed before staging:
 
 ```text
 fatal: Unable to create '.../.git/index.lock': Permission denied
 ```
 
-`Test-Path .git\index.lock` returned `False`, so this is not a stale lock file. The Session 12 files are updated in the working tree but remain uncommitted and unpushed. A future run with Git metadata write access should stage these files and commit `Codex Session 12` before adding more work if possible, or Claude/Randy may include the completed Codex session work in a later combined commit under the agreed protocol.
+`Test-Path .git\index.lock` returned `False`, so this is not a stale lock file. The Session 13 files remain uncommitted and unpushed in the working tree. A future run with Git metadata write access should stage and commit them as `Codex Session 13`, or Claude/Randy may include the completed Codex session work in a later combined commit under the agreed protocol.
 
-## Remaining Phase 3 Work
+## Next Steps
 
-The next major blocker is the Reproducibility Packet:
-
-1. Create the packet structure and README that walks an outside reader from public dataset download through final outputs.
-2. Include or reference the verification dashboard as the reader's first way into the result.
-3. Add packet-local `.gitignore` and license files consistent with dataset CC BY-SA handling and Dandelion code licensing.
-4. Confirm the packet's command sequence reproduces the final EEGNet controls/statistics/dashboard/figures from a fresh environment given the dataset path.
-5. Re-test PDF generation after MiKTeX is repaired or replaced.
+1. Read the active `Reproducibility Packet Review` chat first.
+2. If Git metadata write access is available, stage and commit the Session 13 files as `Codex Session 13` before adding new work.
+3. Coordinate with Claude on the packet validation gate: run the default EEGNet headline stage uninterrupted in a clean output tree and regenerate downstream packet outputs, or explicitly accept the existing validated EEGNet outputs as the expensive-stage cache.
+4. If the packet gate is resolved and both agents approve, Phase 3 can close; the closing agent should write the Phase 3 Close progress report.
+5. Do not reopen the model ladder or soften the bounded-negative wording.
+6. Repair MiKTeX before relying on local PDF compilation.
 
 ## Hard Guards To Preserve
 
@@ -189,6 +202,7 @@ The next major blocker is the Reproducibility Packet:
 ## Local Substrate Facts
 
 - Dataset path: `D:\Simultaneous EEG_LFP`.
+- Dataset NIX directory: `D:\Simultaneous EEG_LFP\data_nix` (37 `Data_Subject_*.h5` files).
 - Project virtual environment exists at `.\venv`; always use `.\venv\Scripts\python.exe` and `.\venv\Scripts\pip.exe`.
 - Common maintenance timing is fixed across trials: fixation `-6 s`, encoding `-5 s`, maintenance `-3 s`, probe `0 s`.
 - iEEG data arrays are trial-aligned, typically shaped `(n_contacts, 16000)`, sampled at `2000 Hz`, and offset `-6 s` relative to probe.

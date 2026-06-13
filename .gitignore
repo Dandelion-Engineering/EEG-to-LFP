@@ -30,6 +30,7 @@ dist/
 /checkpoints/
 /runs/
 /outputs/
+/outputs_cleanroom/
 
 # Scratch / exploratory probes (one-off structure checks, not Standards-compliant
 # scripts). Rebuildable; kept out of the tracked tree to keep the repo clean.
