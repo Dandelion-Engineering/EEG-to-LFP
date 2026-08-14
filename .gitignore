@@ -62,7 +62,6 @@ dist/
 *.pid
 
 # LaTeX build artifacts (Technical Report — PDF re-built from main.tex)
-deliverables/technical_report/main.pdf
 *.aux
 *.out
 *.toc
