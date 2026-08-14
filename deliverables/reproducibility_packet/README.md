@@ -326,10 +326,15 @@ full reasoning is in the Technical Report and the Accessible Piece alongside thi
 
 - **This packet's code** (everything in `scripts/`, `utils/`, and this packet) is released under
   the **MIT License** — see [`LICENSE`](LICENSE). Permissive; commercial use allowed.
-- **The dataset** is **CC BY-SA 4.0** and is **not** redistributed here — you download it from
-  the G-Node DOI (Section 2). If you redistribute the data or an adaptation of it, you must
-  attribute the original authors and share under a compatible license. This packet references the
-  data; it does not adapt or re-host it. Any derived figure or table that travels outside this
+- **The dataset** is **CC BY-SA 4.0**. **The raw recordings are not redistributed here** —
+  you download them yourself from the G-Node DOI (Section 2). **A derived extract of them is
+  redistributed here:** `verification_dashboard.html` embeds **1,683 trial-level records**
+  — subject, session and trial identifiers, the ground-truth label, the set size, and the
+  model and control outputs for each trial. That data layer carries the dataset's own
+  CC BY-SA 4.0 terms: if you reuse it, attribute the dataset authors as cited below and
+  observe those terms. Dandelion's markup and expression around it are MIT. If you
+  redistribute the data or an adaptation of it, you must attribute the original authors and
+  share under a compatible license. Any derived figure or table that travels outside this
   repository should carry dataset attribution.
 - **Dependencies** all carry licenses that permit commercial use: NumPy, SciPy, h5py, nixio,
   pandas, scikit-learn (BSD-family); matplotlib (PSF, BSD-compatible); pyarrow (Apache-2.0).
@@ -338,10 +343,16 @@ full reasoning is in the Technical Report and the Accessible Piece alongside thi
 ### How to cite the dataset
 
 > Boran, E., Fedele, T., Steiner, A., Hilfiker, P., Stieglitz, L., Grunwald, T., Sarnthein, J.
+> (2019). *Dataset of simultaneous scalp EEG and intracranial EEG recordings and human medial
+> temporal lobe units during a verbal working memory task.* G-Node.
+> https://doi.org/10.12751/g-node.d76994 — licensed **CC BY-SA 4.0**:
+> https://creativecommons.org/licenses/by-sa/4.0/
+>
+> The descriptor paper is a separate work, with its own title, year and license:
+> Boran, E., Fedele, T., Steiner, A., Hilfiker, P., Stieglitz, L., Grunwald, T., Sarnthein, J.
 > (2020). *Dataset of human medial temporal lobe neurons, scalp and intracranial EEG during a
-> verbal working memory task.* G-Node. https://doi.org/10.12751/g-node.d76994 (CC BY-SA 4.0).
-> See also Boran et al., *Scientific Data* 7, 30 (2020),
-> https://doi.org/10.1038/s41597-020-0364-3.
+> verbal working memory task.* Scientific Data **7**, 30.
+> https://doi.org/10.1038/s41597-020-0364-3 (CC BY 4.0).
 
 ---
 

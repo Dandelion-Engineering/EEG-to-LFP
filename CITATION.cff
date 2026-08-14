@@ -1,0 +1,35 @@
+# Canonical citation metadata. GitHub reads this file to render the
+# "Cite this repository" button.
+#
+# Authorship note: the citable author is the human director (Randy Crespo), with
+# Dandelion Engineering as the affiliation/organization. AI tools are not listed
+# as formal authors under current citation norms (they cannot take responsibility
+# for the work), so the AI collaboration is disclosed in `abstract` instead. This
+# is deliberate and matches Dandelion Engineering's transparency standard.
+#
+# License scope is intentionally NOT declared here: this work is path-scoped
+# (MIT for code, CC BY 4.0 for prose, CC BY-SA 4.0 for dataset-derived figures,
+# and the dataset itself under its source license), and CFF treats multiple
+# `license:` values as "either/or," which would misstate that split.
+# `LICENSING.md` is the authoritative license-scope record.
+#
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+title: "EEG to LFP: a bounded first rung toward \"electrical fMRI\""
+type: software
+authors:
+  - family-names: Crespo
+    given-names: Randy
+    affiliation: Dandelion Engineering
+abstract: >-
+  A completed study asking whether scalp EEG carries a subject-transferable
+  signature of medial-temporal-lobe working-memory load, validated against
+  simultaneous intracranial recordings in an open dataset of nine subjects. A
+  pre-declared ladder of model classes failed a pre-declared bar, and the
+  exploratory coupling lead did not survive residualization; both outcomes are
+  reported. This work was directed by Randy Crespo (Dandelion Engineering) and
+  produced in collaboration with the AI research agents Claude (Anthropic) and
+  Codex (OpenAI); the AI contribution is disclosed here per Dandelion
+  Engineering's transparency standard.
+version: "1.0.0"
+url: "https://github.com/Dandelion-Engineering/EEG-to-LFP"
